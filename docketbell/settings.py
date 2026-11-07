@@ -101,7 +101,7 @@ TEMPLATES = [
 
 DATABASES = {
     "default": dj_database_url.parse(
-        env("DATABASE_URL", f"sqlite:///{BASE_DIR.parent / 'db.sqlite3'}"),
+        env("DATABASE_URL", f"sqlite:///{Path.cwd() / 'db.sqlite3'}"),
         conn_max_age=env_int("DATABASE_CONN_MAX_AGE", 60),
         conn_health_checks=True,
     )
@@ -157,7 +157,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = Path(env("STATIC_ROOT", str(BASE_DIR.parent / "staticfiles")))
+STATIC_ROOT = Path(env("STATIC_ROOT", str(Path.cwd() / "staticfiles")))
 if DEBUG:
     # In development WhiteNoise serves straight from the source folders; it only
     # needs STATIC_ROOT after collectstatic, so don't warn that it's missing.

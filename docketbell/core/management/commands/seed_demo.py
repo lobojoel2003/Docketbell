@@ -304,7 +304,7 @@ class Command(BaseCommand):
         ).update(status=Message.Status.DELIVERED)
         # A couple of older replies were already handled by staff.
         for message in Message.objects.filter(
-            needs_attention=True, created_at__lt=now - dt.timedelta(days=3)
+            needs_attention=True, created_at__lt=now - dt.timedelta(days=6)
         ):
             message.handled_at = message.created_at + dt.timedelta(hours=2)
             message.save(update_fields=["handled_at"])

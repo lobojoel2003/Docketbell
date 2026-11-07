@@ -21,7 +21,7 @@
   <div class="detail__main stack">
     <section class="card card--flush">
       <h2 class="card__title card__title--pad">{% icon "calendar" %} {% translate "Court dates" %}</h2>
-      <table class="table table--rows"><tbody>
+      <table class="table table--rows table--auto"><tbody>
         {% for cd in court_dates %}
         <tr><td class="t-time">{{ cd|court_time:"M j, Y" }} <span class="muted">{{ cd|court_time }}</span></td>
           <td><a class="row-link" href="{% url 'dashboard:court-date' cd.pk %}">{{ cd.court.name }}</a>{% if cd.hearing_type %}<span class="muted t-sub">{{ cd.hearing_type }}</span>{% endif %}</td>

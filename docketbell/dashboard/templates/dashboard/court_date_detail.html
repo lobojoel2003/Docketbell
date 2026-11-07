@@ -74,6 +74,7 @@
   <div class="detail__main stack">
     <section class="card" id="conversation">
       <h2 class="card__title">{% icon "message" %} {% translate "Conversation" %}</h2>
+      {% if hidden_texts %}<p class="small muted thread-note">{% blocktranslate count n=hidden_texts %}{{ n }} earlier text about other court dates is on the person's page.{% plural %}{{ n }} earlier texts about other court dates are on the person's page.{% endblocktranslate %} <a href="{% url 'dashboard:person' person.pk %}">{% translate "See full history" %}</a></p>{% endif %}
       {% include "dashboard/_thread.html" %}
       {% if not person.is_opted_out %}
       <form method="post" action="{% url 'dashboard:court-date-text' cd.pk %}" class="composer">

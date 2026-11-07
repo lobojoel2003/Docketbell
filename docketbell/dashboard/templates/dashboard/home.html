@@ -82,6 +82,7 @@
     <span class="muted">{% blocktranslate count n=items|length %}{{ n }} court date{% plural %}{{ n }} court dates{% endblocktranslate %}</span>
   </header>
   <table class="table table--rows">
+    <colgroup><col class="col-time"><col><col><col class="col-reminders"><col class="col-status"></colgroup>
     <thead class="visually-hidden"><tr><th>{% translate "Time" %}</th><th>{% translate "Person" %}</th><th>{% translate "Court" %}</th><th>{% translate "Reminders" %}</th><th>{% translate "Reply" %}</th></tr></thead>
     <tbody>
       {% for cd in items %}

@@ -195,7 +195,15 @@ def _thread(person: Person):
 def court_date_detail(request, pk: int):
     court_date = get_object_or_404(CourtDate.objects.with_people(), pk=pk)
     reminders = court_date.reminders.select_related("message").order_by("send_at", "id")
-    thread = list(_thread(court_date.person))
+    # Texts about this court date, plus replies that weren't tied to any date
+    # since it was added. The person page has the full history.
+    everything = _thread(court_date.person)
+    thread = list(
+        everything.filter(
+            Q(court_date=court_date)
+            | Q(court_date__isnull=True, created_at__gte=court_date.created_at)
+        )
+    )
     for message in thread:
         message.segment_info = analyze(message.body)
     context = {
@@ -208,6 +216,7 @@ def court_date_detail(request, pk: int):
         if settings.DOCKETBELL_ALLOW_SIMULATED_REPLIES
         else None,
         "other_dates": court_date.person.court_dates.exclude(pk=pk).select_related("court"),
+        "hidden_texts": everything.count() - len(thread),
     }
     return render(request, "dashboard/court_date_detail.html", context)
 
