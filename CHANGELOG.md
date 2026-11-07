@@ -55,6 +55,7 @@ The first public release.
 ### Operations
 - Docker image for the web server and worker, published to GitHub Container Registry
   with version, build number and commit baked in.
+- Releases from a pushed tag or with one click from the Actions tab.
 - `/healthz` and `/version.json` endpoints; the dashboard warns when the worker stops.
 - `purge_old_data` for data retention, keeping a minimal record of opt-outs.
 - `seed_demo` for a realistic fictional caseload.

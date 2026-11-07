@@ -230,9 +230,12 @@ make release VERSION=1.1.0        # bumps the version, dates the changelog, comm
 git push origin main v1.1.0
 ```
 
-Pushing the tag runs the **Release** workflow:
+Or skip the local tag: after pushing the version bump to `main`, open **Actions → Release →
+Run workflow** and enter the version. The workflow creates the tag for you.
 
-1. Checks that the tag matches the code version and the changelog.
+Either way, the **Release** workflow:
+
+1. Checks that the version matches the code and the changelog.
 2. Runs the full CI suite.
 3. Publishes `ghcr.io/lobojoel2003/docketbell` tagged `1.1.0`, `1.1`, `1` and `latest`,
    with an SBOM and signed build provenance.
@@ -244,7 +247,7 @@ Pushing the tag runs the **Release** workflow:
 | Workflow | When | What |
 |---|---|---|
 | [CI](.github/workflows/ci.yml) | Every push and pull request | Ruff lint and format, tests on Python 3.12 and 3.13 against Postgres 17, Django deploy checks, migration and translation checks, package build, Docker build and smoke test. Pushes to `main` publish `ghcr.io/lobojoel2003/docketbell:edge`. |
-| [Release](.github/workflows/release.yml) | Tags `v*.*.*` | Versioned images, Python packages and the GitHub release. |
+| [Release](.github/workflows/release.yml) | Tags `v*.*.*`, or **Run workflow** | Versioned images, Python packages and the GitHub release. |
 | [CodeQL](.github/workflows/codeql.yml) | Pushes, pull requests, weekly | Security analysis of Python, JavaScript and workflows. |
 | [Dependabot](.github/dependabot.yml) | Weekly | Updates for Python packages, Actions and the base image. |
 

@@ -1,12 +1,21 @@
 name: Release
 
-# Push a tag like v1.2.3 to publish a release. The tag must match
-# docketbell/__init__.py and have a matching section in CHANGELOG.md.
-# `python scripts/release.py 1.2.3` prepares both.
+# Two ways to publish a release (both need docketbell/__init__.py and a
+# matching CHANGELOG.md section; `python scripts/release.py 1.2.3` prepares both):
+#
+#   1. Push a tag:    git push origin v1.2.3
+#   2. Or click:      Actions -> Release -> Run workflow, enter 1.2.3.
+#                     The workflow tags the current main commit for you.
 
 on:
   push:
     tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, e.g. 1.2.3 (must match docketbell/__init__.py)"
+        required: true
+        type: string
 
 concurrency:
   group: release-${{ github.ref }}
@@ -19,19 +28,32 @@ jobs:
   verify:
     name: Verify version
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # only used to create the tag for manual releases
     outputs:
       version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
       prerelease: ${{ steps.version.outputs.prerelease }}
     steps:
       - uses: actions/checkout@v7
       - name: Tag, package version and changelog agree
         id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
-          tag="${GITHUB_REF_NAME}"
-          version="${tag#v}"
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+              echo "::error::Run manual releases from the main branch."
+              exit 1
+            fi
+            version="${INPUT_VERSION#v}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          tag="v$version"
           code_version=$(python3 -c "import re; print(re.search(r'__version__ = \"(.+?)\"', open('docketbell/__init__.py').read()).group(1))")
           if [ "$version" != "$code_version" ]; then
-            echo "::error::Tag $tag does not match docketbell.__version__ ($code_version)"
+            echo "::error::Version $version does not match docketbell.__version__ ($code_version)"
             exit 1
           fi
           if ! grep -q "^## \[$version\]" CHANGELOG.md; then
@@ -39,11 +61,26 @@ jobs:
             exit 1
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
           if [[ "$version" == *-* ]]; then
             echo "prerelease=true" >> "$GITHUB_OUTPUT"
           else
             echo "prerelease=false" >> "$GITHUB_OUTPUT"
           fi
+      - name: Create the tag (manual releases)
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" > /dev/null; then
+            echo "::error::Tag $TAG already exists. Bump the version to release again."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Docketbell $VERSION" "$GITHUB_SHA"
+          git push origin "refs/tags/$TAG"
 
   ci:
     name: CI
@@ -96,9 +133,9 @@ jobs:
         with:
           images: ${{ steps.vars.outputs.image }}
           tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}},enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+            type=semver,pattern={{version}},value=${{ needs.verify.outputs.tag }}
+            type=semver,pattern={{major}}.{{minor}},value=${{ needs.verify.outputs.tag }}
+            type=semver,pattern={{major}},value=${{ needs.verify.outputs.tag }},enable=${{ !startsWith(needs.verify.outputs.tag, 'v0.') }}
             type=raw,value=latest,enable=${{ needs.verify.outputs.prerelease == 'false' }}
           labels: |
             org.opencontainers.image.version=${{ needs.verify.outputs.version }}
@@ -180,11 +217,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ needs.verify.outputs.version }}
+          TAG: ${{ needs.verify.outputs.tag }}
           PRERELEASE: ${{ needs.verify.outputs.prerelease }}
         run: |
           flags=()
           if [ "$PRERELEASE" = "true" ]; then flags+=(--prerelease); else flags+=(--latest); fi
-          gh release create "$GITHUB_REF_NAME" dist/* \
+          gh release create "$TAG" dist/* \
             --title "Docketbell $VERSION" \
             --notes-file notes.md \
             --verify-tag "${flags[@]}"
