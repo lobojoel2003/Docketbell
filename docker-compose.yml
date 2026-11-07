@@ -1,0 +1,66 @@
+# Run Docketbell locally or on a single server:
+#
+#   docker compose up -d
+#   docker compose exec web docketbell createsuperuser
+#
+# Then open http://localhost:8000. Put real settings in a .env file (see .env.example).
+
+name: docketbell
+
+x-app: &app
+  image: ghcr.io/lobojoel2003/docketbell:${DOCKETBELL_VERSION:-latest}
+  build: .
+  restart: unless-stopped
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    DATABASE_URL: postgres://docketbell:${POSTGRES_PASSWORD:-docketbell}@db:5432/docketbell
+    SECRET_KEY: ${SECRET_KEY:-change-me-before-going-live}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    # Plain HTTP on localhost needs non-secure cookies. Set both to true behind HTTPS.
+    SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-false}
+    CSRF_COOKIE_SECURE: ${CSRF_COOKIE_SECURE:-false}
+    SMS_BACKEND: ${SMS_BACKEND:-console}
+    DOCKETBELL_ALLOW_SIMULATED_REPLIES: ${DOCKETBELL_ALLOW_SIMULATED_REPLIES:-true}
+  depends_on:
+    db:
+      condition: service_healthy
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: docketbell
+      POSTGRES_USER: docketbell
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-docketbell}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docketbell -d docketbell"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    <<: *app
+    command: web
+    ports:
+      - "${PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz', timeout=4)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  worker:
+    <<: *app
+    command: worker
+    depends_on:
+      web:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
