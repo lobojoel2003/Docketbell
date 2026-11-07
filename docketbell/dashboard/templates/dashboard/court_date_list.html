@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Court dates" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "Court dates" %}</h1>
+    <p class="muted">{% blocktranslate count n=page.paginator.count %}{{ n }} court date{% plural %}{{ n }} court dates{% endblocktranslate %}</p></div>
+  <form class="filters" method="get">
+    <div class="segmented" role="group" aria-label="{% translate 'When' %}">
+      <a href="{% query when='upcoming' %}" {% if when == 'upcoming' %}aria-current="true"{% endif %}>{% translate "Upcoming" %}</a>
+      <a href="{% query when='past' %}" {% if when == 'past' %}aria-current="true"{% endif %}>{% translate "Past" %}</a>
+    </div>
+    <input type="hidden" name="when" value="{{ when }}">
+    <label class="visually-hidden" for="status-filter">{% translate "Status" %}</label>
+    <select id="status-filter" name="status" data-autosubmit>
+      <option value="">{% translate "Any status" %}</option>
+      {% for value, label in statuses %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+    </select>
+    <label class="visually-hidden" for="q">{% translate "Search" %}</label>
+    <input id="q" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Name, phone or case' %}">
+  </form>
+</div>
+<div class="card card--flush">
+<table class="table table--rows">
+  <thead><tr><th>{% translate "When" %}</th><th>{% translate "Person" %}</th><th>{% translate "Court" %}</th><th>{% translate "Reminders" %}</th><th>{% translate "Status" %}</th></tr></thead>
+  <tbody>
+  {% for cd in page %}
+  <tr>
+    <td class="t-time">{{ cd|court_time:"M j" }} <span class="muted">{{ cd|court_time }}</span></td>
+    <td class="t-person"><a class="row-link" href="{% url 'dashboard:court-date' cd.pk %}">{{ cd.person.full_name }}</a> <span class="lang">{{ cd.person.language|upper|slice:":2" }}</span>{% if cd.case_number %}<span class="muted t-sub">{{ cd.case_number }}</span>{% endif %}</td>
+    <td class="t-court">{{ cd.court.name }}{% if cd.room %}<span class="muted t-sub">{{ cd.room }}</span>{% endif %}</td>
+    <td class="t-reminders">{% include "dashboard/_reminder_dots.html" with reminders=cd.visible_reminders %}</td>
+    <td class="t-status">{% if cd.status == "scheduled" %}{% include "dashboard/_response.html" with response=cd.response %}{% else %}<span class="pill pill--outcome-{{ cd.status }}">{{ cd.get_status_display }}</span>{% endif %}</td>
+  </tr>
+  {% empty %}<tr><td colspan="5" class="muted empty-row">{% translate "No court dates match." %}</td></tr>{% endfor %}
+  </tbody>
+</table>
+</div>
+{% include "dashboard/_pagination.html" %}
+{% endblock %}

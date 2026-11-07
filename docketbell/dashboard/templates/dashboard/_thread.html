@@ -1,0 +1,22 @@
+{% load i18n docketbell %}
+<ol class="thread" aria-label="{% translate 'Text messages' %}">
+  {% for m in thread %}
+  {% ifchanged m.created_at.date %}<li class="thread__day">{{ m.created_at|date:"l, F j" }}</li>{% endifchanged %}
+  <li class="bubble-row {% if m.is_outbound %}bubble-row--out{% else %}bubble-row--in{% endif %}">
+    <div class="bubble {% if m.is_outbound %}bubble--out{% else %}bubble--in{% endif %} {% if m.status == 'failed' or m.status == 'undelivered' %}bubble--failed{% endif %}" dir="auto">{{ m.body|linebreaksbr }}</div>
+    <div class="bubble-meta">
+      {% if m.is_outbound %}
+        {% if m.kind == "manual" and m.sent_by %}{% blocktranslate with name=m.sent_by.get_username %}Sent by {{ name }}{% endblocktranslate %}{% else %}{{ m.kind_label }}{% endif %}
+        · {{ m.created_at|date:"g:i A" }} · {{ m.get_status_display }}
+        {% if m.error %}<span class="error-text" title="{{ m.error }}">· {{ m.error|truncatechars:60 }}</span>{% endif %}
+        · <span title="{{ m.segment_info.encoding }}">{% blocktranslate count n=m.segments %}{{ n }} segment{% plural %}{{ n }} segments{% endblocktranslate %}</span>
+      {% else %}
+        {{ m.created_at|date:"g:i A" }}{% if m.intent %} · <span class="intent intent--{{ m.intent }}">{{ m.get_intent_display }}</span>{% endif %}
+        {% if m.needs_attention and not m.handled_at %} · <form method="post" action="{% url 'dashboard:inbox-handle' m.pk %}" class="inline-form">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="link-button" type="submit">{% translate "Mark handled" %}</button></form>{% endif %}
+      {% endif %}
+    </div>
+  </li>
+  {% empty %}
+  <li class="thread__empty muted">{% translate "No texts yet. The welcome text goes out during the next send window." %}</li>
+  {% endfor %}
+</ol>

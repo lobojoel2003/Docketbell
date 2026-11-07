@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docketbell"
+dynamic = ["version"]
+description = "Court date text reminders: short, kind, clear texts in each person's language, plus a dashboard that shows who has confirmed."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [{ name = "Joel Stain Lobo" }]
+requires-python = ">=3.12"
+keywords = ["courts", "sms", "reminders", "public-defender", "civic-tech", "django"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+    "Intended Audience :: Legal Industry",
+    "Natural Language :: English",
+    "Natural Language :: Spanish",
+    "Natural Language :: Chinese (Simplified)",
+    "Natural Language :: Vietnamese",
+    "Natural Language :: Korean",
+    "Natural Language :: Russian",
+    "Natural Language :: Arabic",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: Telephony",
+    "Topic :: Sociology",
+]
+dependencies = [
+    "Django>=5.2.8,<5.3",
+    "psycopg[binary]>=3.2,<4",
+    "dj-database-url>=2.3,<4",
+    "babel>=2.16,<3",
+    "phonenumbers>=8.13,<10",
+    "httpx>=0.27,<1",
+    "whitenoise>=6.8,<7",
+    "gunicorn>=23,<27",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-django>=4.9",
+    "pytest-cov>=6",
+    "time-machine>=2.16",
+    "ruff>=0.8",
+    "polib>=1.2",
+    "build>=1.2",
+]
+
+[project.urls]
+Homepage = "https://github.com/lobojoel2003/Docketbell"
+Documentation = "https://github.com/lobojoel2003/Docketbell#readme"
+Changelog = "https://github.com/lobojoel2003/Docketbell/blob/main/CHANGELOG.md"
+Issues = "https://github.com/lobojoel2003/Docketbell/issues"
+
+[project.scripts]
+docketbell = "docketbell.__main__:main"
+
+[tool.setuptools.dynamic]
+version = { attr = "docketbell.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["docketbell*"]
+
+[tool.setuptools.package-data]
+docketbell = [
+    "templates/**/*.html",
+    "templates/**/*.txt",
+    "static/**/*",
+    "locale/*/LC_MESSAGES/*.po",
+    "locale/*/LC_MESSAGES/*.mo",
+    "fixtures/*.csv",
+]
+"docketbell.dashboard" = ["templates/**/*.html"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "tests.settings"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+filterwarnings = ["error::RuntimeWarning"]
+
+[tool.coverage.run]
+source = ["docketbell"]
+branch = true
+omit = ["docketbell/*/migrations/*", "docketbell/wsgi.py", "docketbell/asgi.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = ["if TYPE_CHECKING:", "raise NotImplementedError"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["docketbell/*/migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "DJ", "S", "SIM", "RUF", "C4", "PIE", "PT"]
+ignore = [
+    "S101",   # assert is fine in tests
+    "RUF012", # Django class attributes (Meta, choices) are not ClassVar
+    "S308",   # mark_safe is used deliberately on escaped content
+    "RUF001", # multilingual project: non-ASCII characters in strings are intended
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S105", "S106", "S107", "S311", "PT018"]
+"docketbell/core/management/commands/seed_demo.py" = ["S311"]
+"scripts/**" = ["S603", "S607", "S310"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["docketbell", "tests"]

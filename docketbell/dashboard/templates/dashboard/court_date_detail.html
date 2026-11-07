@@ -1,0 +1,114 @@
+{% extends "base.html" %}{% load i18n tz docketbell %}
+{% block title %}{{ person.full_name }}{% endblock %}
+{% block content %}
+<nav class="crumbs"><a href="{% url 'dashboard:home' %}">{% translate "Upcoming" %}</a> / <a href="{% url 'dashboard:person' person.pk %}">{{ person.full_name }}</a></nav>
+<div class="page-head">
+  <div class="person-head">
+    <span class="avatar avatar--lg" aria-hidden="true">{{ person.initials }}</span>
+    <div>
+      <h1>{{ person.full_name }}</h1>
+      <p class="muted">{{ cd|court_time:"l, F j, Y" }} · {{ cd|court_time }} · {{ cd.court.name }}</p>
+    </div>
+  </div>
+  <div class="head-status">
+    {% if cd.status == "scheduled" %}{% include "dashboard/_response.html" with response=cd.response %}
+    {% else %}<span class="pill pill--outcome-{{ cd.status }}">{{ cd.get_status_display }}</span>{% endif %}
+  </div>
+</div>
+
+<div class="detail">
+  <div class="detail__side stack">
+    <section class="card">
+      <h2 class="card__title">{% icon "calendar" %} {% translate "Court date" %}</h2>
+      <dl class="facts">
+        <dt>{% translate "When" %}</dt><dd>{{ cd|court_time:"l, F j, Y" }}<br>{{ cd|court_time }} <span class="muted">({{ cd.court.timezone }})</span></dd>
+        <dt>{% translate "Where" %}</dt><dd>{{ cd.court.name }}{% if cd.room %}, {{ cd.room }}{% endif %}{% if cd.court.address %}<br><span class="muted">{{ cd.court.address }}</span>{% endif %}</dd>
+        {% if cd.hearing_type %}<dt>{% translate "Hearing" %}</dt><dd>{{ cd.hearing_type }}</dd>{% endif %}
+        {% if cd.case_number %}<dt>{% translate "Case" %}</dt><dd>{{ cd.case_number }} <span class="muted">· {% translate "not in texts" %}</span></dd>{% endif %}
+        <dt>{% translate "Status" %}</dt><dd>{{ cd.get_status_display }}{% if cd.confirmed_at %} · {% blocktranslate with when=cd.confirmed_at|date:"M j, g:i A" %}confirmed {{ when }}{% endblocktranslate %}{% endif %}</dd>
+      </dl>
+      {% if cd.status == "scheduled" %}<a class="btn btn--sm" href="{% url 'dashboard:court-date-edit' cd.pk %}">{% translate "Change date or details" %}</a>{% endif %}
+    </section>
+
+    <section class="card">
+      <h2 class="card__title">{% icon "phone" %} {% translate "Person" %}</h2>
+      <dl class="facts">
+        <dt>{% translate "Mobile" %}</dt><dd><a href="tel:{{ person.phone }}">{{ person.phone|phone }}</a>{% if person.phone_status == "undeliverable" %} <span class="pill pill--unreachable">{% icon "slash" %}{% translate "Undeliverable" %}</span>{% endif %}</dd>
+        <dt>{% translate "Texts in" %}</dt><dd>{{ person.get_language_display }}</dd>
+        <dt>{% translate "Texts" %}</dt><dd>{% if person.is_opted_out %}<span class="pill pill--unreachable">{% icon "slash" %}{% translate "Opted out" %}</span> <span class="muted">{{ person.opted_out_at|date:"M j" }}</span>{% else %}{% translate "Subscribed" %}{% endif %}</dd>
+      </dl>
+      {% if other_dates %}<p class="muted small">{% blocktranslate count n=other_dates|length %}{{ n }} other court date{% plural %}{{ n }} other court dates{% endblocktranslate %} · <a href="{% url 'dashboard:person' person.pk %}">{% translate "See all" %}</a></p>{% endif %}
+    </section>
+
+    {% if cd.status == "scheduled" %}
+    <section class="card">
+      <h2 class="card__title">{% translate "Actions" %}</h2>
+      <div class="actions">
+        {% if cd.needs_help %}
+        <form method="post" action="{% url 'dashboard:court-date-action' cd.pk %}">{% csrf_token %}<input type="hidden" name="action" value="resolve_help"><button class="btn btn--block" type="submit">{% icon "check" %} {% translate "Help request handled" %}</button></form>
+        {% endif %}
+        {% if not cd.confirmed_at %}
+        <form method="post" action="{% url 'dashboard:court-date-action' cd.pk %}">{% csrf_token %}<input type="hidden" name="action" value="confirm"><button class="btn btn--block" type="submit">{% translate "Mark confirmed (by phone)" %}</button></form>
+        {% endif %}
+        <form method="post" action="{% url 'dashboard:court-date-action' cd.pk %}">{% csrf_token %}<input type="hidden" name="action" value="attended"><button class="btn btn--block" type="submit">{% translate "Came to court" %}</button></form>
+        <details class="action-details">
+          <summary class="btn btn--block">{% translate "Missed court…" %}</summary>
+          <form method="post" action="{% url 'dashboard:court-date-action' cd.pk %}" class="stack">{% csrf_token %}<input type="hidden" name="action" value="missed">
+            <label class="check"><input type="checkbox" name="notify" checked> {% translate "Text them a kind follow-up asking them to call" %}</label>
+            <button class="btn btn--danger btn--block" type="submit">{% translate "Record missed court" %}</button></form>
+        </details>
+        <details class="action-details">
+          <summary class="btn btn--block btn--quiet">{% translate "Cancel court date…" %}</summary>
+          <form method="post" action="{% url 'dashboard:court-date-action' cd.pk %}" class="stack">{% csrf_token %}<input type="hidden" name="action" value="cancel">
+            <label class="check"><input type="checkbox" name="notify" checked> {% translate "Tell them by text that they don't need to go" %}</label>
+            <button class="btn btn--danger btn--block" type="submit">{% translate "Cancel this court date" %}</button></form>
+        </details>
+      </div>
+    </section>
+    {% elif cd.status == "missed" or cd.status == "attended" %}
+    <section class="card"><h2 class="card__title">{% translate "Outcome" %}</h2><p>{{ cd.get_status_display }}</p>
+      <a class="btn btn--sm" href="{% url 'dashboard:court-date-new' %}?person={{ person.pk }}">{% translate "Add a new court date" %}</a></section>
+    {% endif %}
+  </div>
+
+  <div class="detail__main stack">
+    <section class="card" id="conversation">
+      <h2 class="card__title">{% icon "message" %} {% translate "Conversation" %}</h2>
+      {% include "dashboard/_thread.html" %}
+      {% if not person.is_opted_out %}
+      <form method="post" action="{% url 'dashboard:court-date-text' cd.pk %}" class="composer">
+        {% csrf_token %}
+        <label for="id_body" class="visually-hidden">{% translate "Write a text" %}</label>
+        <textarea id="id_body" name="body" rows="2" maxlength="640" placeholder="{% blocktranslate with name=person.first_name %}Write a text to {{ name }}…{% endblocktranslate %}" data-segment-counter required></textarea>
+        <div class="composer__bar"><span class="muted small" data-segment-output></span><button class="btn btn--primary btn--sm" type="submit">{% icon "send" %} {% translate "Send" %}</button></div>
+      </form>
+      {% endif %}
+      {% if simulate_form %}
+      <form method="post" action="{% url 'dashboard:court-date-simulate' cd.pk %}" class="simulate">
+        {% csrf_token %}
+        <span class="simulate__label">{% translate "Training mode: reply as this person" %}</span>
+        <div class="simulate__chips">
+          <button class="chip" name="body" value="1">1</button><button class="chip" name="body" value="2">2</button><button class="chip" name="body" value="STOP">STOP</button><button class="chip" name="body" value="START">START</button><button class="chip" name="body" value="Español">Español</button><button class="chip" name="body" value="What should I bring?">{% translate "Question" %}</button>
+        </div>
+      </form>
+      {% endif %}
+    </section>
+
+    <section class="card">
+      <h2 class="card__title">{% icon "clock" %} {% translate "Reminder schedule" %}</h2>
+      <ol class="timeline">
+        {% for r in reminders %}
+        <li class="timeline__item timeline__item--{{ r.status }}">
+          <span class="timeline__icon">{% icon r.status|reminder_icon %}</span>
+          <div>
+            <strong>{{ r.get_kind_display }}</strong>
+            <span class="muted">· {% localtime off %}{{ r.send_at|in_court_tz:cd.court|date:"D, M j, g:i A" }}{% endlocaltime %}</span>
+            <div class="small muted">{{ r.get_status_display }}{% if r.detail %} · {{ r.detail }}{% endif %}{% if r.attempts > 1 %} · {% blocktranslate count n=r.attempts %}{{ n }} attempt{% plural %}{{ n }} attempts{% endblocktranslate %}{% endif %}</div>
+          </div>
+        </li>
+        {% empty %}<li class="muted">{% translate "Nothing scheduled." %}</li>{% endfor %}
+      </ol>
+    </section>
+  </div>
+</div>
+{% endblock %}

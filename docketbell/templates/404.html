@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "Not found" %}{% endblock %}
+{% block content %}
+<div class="empty"><h1>{% translate "We couldn't find that page." %}</h1><p><a href="/">{% translate "Back to the dashboard" %}</a></p></div>
+{% endblock %}

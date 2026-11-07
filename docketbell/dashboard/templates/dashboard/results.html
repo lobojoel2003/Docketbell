@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% load i18n docketbell humanize %}
+{% block title %}{% translate "Results" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "Results" %}</h1><p class="muted">{% translate "Did people come to court? Based on outcomes staff recorded." %}</p></div>
+  <div class="segmented" role="group" aria-label="{% translate 'Period' %}">
+    <a href="?days=30" {% if days == 30 %}aria-current="true"{% endif %}>{% translate "30 days" %}</a>
+    <a href="?days=90" {% if days == 90 %}aria-current="true"{% endif %}>{% translate "90 days" %}</a>
+    <a href="?days=365" {% if days == 365 %}aria-current="true"{% endif %}>{% translate "1 year" %}</a>
+  </div>
+</div>
+
+<section class="card summary">
+  <div class="summary__hero">
+    <h2 class="eyebrow">{% translate "Came to court" %}</h2>
+    <p class="hero-figure">{% if overall.rate is not None %}{{ overall.rate }}%{% else %}–{% endif %}</p>
+    <p class="muted">{% blocktranslate with a=overall.attended t=overall.total %}{{ a }} of {{ t }} court dates with a recorded outcome{% endblocktranslate %}</p>
+    {% if unrecorded %}<p class="small"><a href="{% url 'dashboard:court-dates' %}?when=past&amp;status=scheduled">{% blocktranslate count n=unrecorded %}{{ n }} past court date has no outcome yet{% plural %}{{ n }} past court dates have no outcome yet{% endblocktranslate %}</a></p>{% endif %}
+  </div>
+  <div class="summary__detail">
+    <h3 class="eyebrow">{% translate "Appearance rate by reply" %}</h3>
+    <ul class="bars">
+      {% for g in groups %}
+      <li class="bars__row">
+        <span class="bars__label">{{ g.label }} <span class="muted small">· {% blocktranslate count n=g.total %}{{ n }} date{% plural %}{{ n }} dates{% endblocktranslate %}</span></span>
+        <span class="bars__track">{% if g.rate is not None %}<span class="bars__fill" style="width: {{ g.rate }}%" data-tip="{{ g.label }} · {{ g.attended }}/{{ g.total }} · {{ g.rate }}%"></span>{% endif %}</span>
+        <span class="bars__value">{% if g.rate is not None %}{{ g.rate }}%{% else %}–{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="muted small">{% translate "People who confirm may differ from people who don't, so this shows a pattern, not proof that texts caused it." %}</p>
+  </div>
+</section>
+
+<section class="card studio-summary">
+  <div class="stat"><span class="stat__label">{% translate "Texts sent" %}</span><span class="stat__value">{{ texts_sent|intcomma }}</span>{% if texts_failed %}<span class="small error-text">{% blocktranslate count n=texts_failed %}{{ n }} failed{% plural %}{{ n }} failed{% endblocktranslate %}</span>{% endif %}</div>
+  <div class="stat"><span class="stat__label">{% translate "Replies" %}</span><span class="stat__value">{{ replies|intcomma }}</span></div>
+  <div class="stat"><span class="stat__label">{% translate "Opt-outs" %}</span><span class="stat__value">{{ opt_outs|intcomma }}</span></div>
+  <div class="stat"><span class="stat__label">{% translate "Estimated SMS cost" %}</span><span class="stat__value">{{ cost|money }}</span><span class="muted small">{% blocktranslate with n=segments|intcomma %}{{ n }} segments{% endblocktranslate %}</span></div>
+</section>
+
+<div class="card card--flush">
+<table class="table">
+  <caption class="visually-hidden">{% translate "Appearance by reply" %}</caption>
+  <thead><tr><th>{% translate "Reply" %}</th><th class="num">{% translate "Court dates" %}</th><th class="num">{% translate "Came to court" %}</th><th class="num">{% translate "Rate" %}</th></tr></thead>
+  <tbody>
+    {% for g in groups %}<tr><td>{{ g.label }}</td><td class="num">{{ g.total }}</td><td class="num">{{ g.attended }}</td><td class="num">{% if g.rate is not None %}{{ g.rate }}%{% else %}–{% endif %}</td></tr>{% endfor %}
+    <tr class="total"><td>{% translate "All" %}</td><td class="num">{{ overall.total }}</td><td class="num">{{ overall.attended }}</td><td class="num">{% if overall.rate is not None %}{{ overall.rate }}%{% else %}–{% endif %}</td></tr>
+  </tbody>
+</table>
+</div>
+{% endblock %}

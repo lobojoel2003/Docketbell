@@ -1,0 +1,43 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Messages" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{% translate "Messages" %}</h1>
+    <p class="muted">{% translate "Every text Docketbell sends, exactly as people see it. Edit any of them in the admin under Custom message texts." %}</p>
+  </div>
+  <form method="get" class="filters">
+    <label for="lang" class="visually-hidden">{% translate "Language" %}</label>
+    <select id="lang" name="lang" data-autosubmit>
+      {% for code, name in languages %}<option value="{{ code }}" {% if code == language %}selected{% endif %}>{{ name }}</option>{% endfor %}
+    </select>
+  </form>
+</div>
+
+<section class="card studio-summary">
+  <div class="stat"><span class="stat__label">{% translate "Texts per court date" %}</span><span class="stat__value">{{ typical_texts }}</span><span class="muted small">{% translate "welcome +" %} {{ schedule|join:", " }} {% translate "days before, at" %} {{ send_time }}</span></div>
+  <div class="stat"><span class="stat__label">{% translate "SMS segments" %}</span><span class="stat__value">{{ typical_segments }}</span><span class="muted small">{% translate "carriers bill per segment" %}</span></div>
+  <div class="stat"><span class="stat__label">{% translate "Cost per court date" %}</span><span class="stat__value">{{ typical_cost|money }}</span><span class="muted small">{% blocktranslate with price=cost_per_segment|money %}at {{ price }} per segment{% endblocktranslate %}</span></div>
+</section>
+
+{% for group, items in groups.items %}
+<h2 class="section-title">{% if group == "reminder" %}{% translate "Reminders and notices" %}{% else %}{% translate "Automatic replies" %}{% endif %}</h2>
+<div class="studio-grid">
+  {% for item in items %}
+  <article class="card studio-card">
+    <header>
+      <h3>{{ item.spec.label }}{% if item.custom %} <span class="tag">{% translate "Custom" %}</span>{% endif %}</h3>
+      <p class="muted small">{{ item.spec.when }}{% if item.schedule_note %} <strong>{{ item.schedule_note }}</strong>{% endif %}</p>
+    </header>
+    <div class="phone" dir="{{ direction }}" lang="{{ language }}"><div class="phone__from" dir="ltr">{{ org_name }}</div><div class="bubble">{{ item.body }}</div></div>
+    <footer class="studio-card__meta small">
+      <span>{% blocktranslate with n=item.info.units %}{{ n }} characters{% endblocktranslate %}</span>
+      <span class="{% if item.info.segments > 2 %}meta-warn{% endif %}">{% blocktranslate count n=item.info.segments %}{{ n }} segment{% plural %}{{ n }} segments{% endblocktranslate %}</span>
+      <span title="{% if item.info.is_unicode %}{% translate 'Uses characters outside the basic SMS alphabet, so each segment holds 70 characters instead of 160.' %}{% else %}{% translate 'Basic SMS alphabet: 160 characters per segment.' %}{% endif %}">{{ item.info.encoding }}</span>
+      <span>{{ item.cost|money }}</span>
+    </footer>
+  </article>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

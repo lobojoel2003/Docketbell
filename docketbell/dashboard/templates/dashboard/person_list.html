@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "People" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "People" %}</h1><p class="muted">{% blocktranslate count n=page.paginator.count %}{{ n }} person{% plural %}{{ n }} people{% endblocktranslate %}</p></div>
+  <form class="filters" method="get"><label class="visually-hidden" for="q">{% translate "Search" %}</label><input id="q" type="search" name="q" value="{{ q }}" placeholder="{% translate 'Name or phone' %}"></form>
+</div>
+<div class="card card--flush">
+<table class="table table--rows">
+  <thead><tr><th>{% translate "Name" %}</th><th>{% translate "Mobile" %}</th><th>{% translate "Texts in" %}</th><th>{% translate "Next court date" %}</th><th>{% translate "Texts" %}</th></tr></thead>
+  <tbody>
+  {% for p in page %}
+  <tr>
+    <td class="t-person"><a class="row-link" href="{% url 'dashboard:person' p.pk %}">{{ p.full_name }}</a></td>
+    <td>{{ p.phone|phone }}</td>
+    <td>{{ p.get_language_display }}</td>
+    <td>{% if p.next_date %}{{ p.next_date|court_time:"D, M j" }} <span class="muted">{{ p.next_date|court_time }}</span>{% else %}<span class="muted">–</span>{% endif %}</td>
+    <td>{% if p.is_opted_out %}<span class="pill pill--unreachable">{% icon "slash" %}{% translate "Opted out" %}</span>{% elif p.phone_status == "undeliverable" %}<span class="pill pill--unreachable">{% icon "slash" %}{% translate "Undeliverable" %}</span>{% else %}<span class="muted">{% translate "Subscribed" %}</span>{% endif %}</td>
+  </tr>
+  {% empty %}<tr><td colspan="5" class="muted empty-row">{% translate "Nobody matches." %}</td></tr>{% endfor %}
+  </tbody>
+</table>
+</div>
+{% include "dashboard/_pagination.html" %}
+{% endblock %}

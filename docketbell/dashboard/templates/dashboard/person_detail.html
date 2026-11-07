@@ -1,0 +1,35 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{{ person.full_name }}{% endblock %}
+{% block content %}
+{% translate "optional" as optional_label %}
+<nav class="crumbs"><a href="{% url 'dashboard:people' %}">{% translate "People" %}</a></nav>
+<div class="page-head">
+  <div class="person-head"><span class="avatar avatar--lg" aria-hidden="true">{{ person.initials }}</span>
+    <div><h1>{{ person.full_name }}</h1><p class="muted">{{ person.phone|phone }} · {{ person.get_language_display }}{% if person.is_opted_out %} · {% translate "opted out" %}{% endif %}</p></div></div>
+  <a class="btn btn--primary" href="{% url 'dashboard:court-date-new' %}?person={{ person.pk }}">{% icon "plus" %} {% translate "Add court date" %}</a>
+</div>
+<div class="detail">
+  <div class="detail__side stack">
+    <section class="card">
+      <h2 class="card__title">{% translate "Details" %}</h2>
+      <form method="post" class="stack" novalidate>{% csrf_token %}
+        {% for field in form %}{% include "dashboard/_field.html" %}{% endfor %}
+        <button class="btn btn--primary" type="submit">{% translate "Save" %}</button>
+      </form>
+    </section>
+  </div>
+  <div class="detail__main stack">
+    <section class="card card--flush">
+      <h2 class="card__title card__title--pad">{% icon "calendar" %} {% translate "Court dates" %}</h2>
+      <table class="table table--rows"><tbody>
+        {% for cd in court_dates %}
+        <tr><td class="t-time">{{ cd|court_time:"M j, Y" }} <span class="muted">{{ cd|court_time }}</span></td>
+          <td><a class="row-link" href="{% url 'dashboard:court-date' cd.pk %}">{{ cd.court.name }}</a>{% if cd.hearing_type %}<span class="muted t-sub">{{ cd.hearing_type }}</span>{% endif %}</td>
+          <td class="t-status">{% if cd.status == "scheduled" %}{% include "dashboard/_response.html" with response=cd.response %}{% else %}<span class="pill pill--outcome-{{ cd.status }}">{{ cd.get_status_display }}</span>{% endif %}</td></tr>
+        {% empty %}<tr><td class="muted empty-row">{% translate "No court dates yet." %}</td></tr>{% endfor %}
+      </tbody></table>
+    </section>
+    <section class="card"><h2 class="card__title">{% icon "message" %} {% translate "Conversation" %}</h2>{% include "dashboard/_thread.html" %}</section>
+  </div>
+</div>
+{% endblock %}

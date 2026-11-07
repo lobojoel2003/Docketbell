@@ -1,0 +1,45 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Import" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Import court dates" %}</h1>
+  <p class="muted">{% translate "Upload a CSV export from your case management system. Re-importing is safe: new dates are added, moved dates are rescheduled, and unchanged rows are skipped." %}</p>
+</div><a class="btn" href="{% url 'dashboard:import-template' %}">{% icon "upload" %} {% translate "Download template" %}</a></div>
+
+<div class="detail">
+  <div class="detail__main stack">
+    <form method="post" enctype="multipart/form-data" class="card stack">
+      {% csrf_token %}
+      {% for field in form %}{% include "dashboard/_field.html" %}{% endfor %}
+      <div><button class="btn btn--primary" type="submit">{% icon "upload" %} {% translate "Upload" %}</button></div>
+    </form>
+
+    {% if report %}
+    <section class="card" aria-live="polite">
+      <h2 class="card__title">{% if report.dry_run %}{% translate "Check complete. Nothing was saved." %}{% else %}{% translate "Import complete" %}{% endif %}</h2>
+      <div class="studio-summary studio-summary--inline">
+        <div class="stat"><span class="stat__label">{% if report.dry_run %}{% translate "Would add" %}{% else %}{% translate "Added" %}{% endif %}</span><span class="stat__value">{{ report.created }}</span></div>
+        <div class="stat"><span class="stat__label">{% if report.dry_run %}{% translate "Would update" %}{% else %}{% translate "Updated" %}{% endif %}</span><span class="stat__value">{{ report.updated }}</span></div>
+        <div class="stat"><span class="stat__label">{% translate "Unchanged" %}</span><span class="stat__value">{{ report.unchanged }}</span></div>
+        <div class="stat"><span class="stat__label">{% translate "Problems" %}</span><span class="stat__value">{{ report.errors|length }}</span></div>
+      </div>
+      {% if report.errors or report.skipped %}
+      <table class="table"><thead><tr><th>{% translate "Line" %}</th><th>{% translate "Problem" %}</th></tr></thead><tbody>
+        {% for line, error in report.errors %}<tr><td class="num">{{ line }}</td><td class="error-text">{{ error }}</td></tr>{% endfor %}
+        {% for line, note in report.skipped %}<tr><td class="num">{{ line }}</td><td class="muted">{% translate "Skipped" %}: {{ note }}</td></tr>{% endfor %}
+      </tbody></table>
+      {% endif %}
+      {% if report.dry_run and not report.errors %}<p>{% translate "Looks good. Untick “Check the file only” and upload again to import." %}</p>{% endif %}
+    </section>
+    {% endif %}
+  </div>
+  <aside class="detail__side stack">
+    <section class="card">
+      <h2 class="card__title">{% translate "Columns" %}</h2>
+      <ul class="columns-list">{% for c in columns %}<li><code>{{ c }}</code>{% if c in required %} <span class="tag">{% translate "required" %}</span>{% endif %}</li>{% endfor %}</ul>
+      <p class="small muted">{% translate "Dates like 2026-11-17 or 11/17/2026. Times like 14:30 or 2:30 PM. Language as a code (es) or a name (Spanish)." %}</p>
+      <p class="small muted">{% translate "Court names must match a court in the admin:" %} {% for c in courts %}<strong>{{ c.name }}</strong>{% if not forloop.last %}, {% endif %}{% empty %}{% translate "none yet" %}{% endfor %}</p>
+    </section>
+  </aside>
+</div>
+{% endblock %}

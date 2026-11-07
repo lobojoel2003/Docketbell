@@ -1,0 +1,1254 @@
+# Haitian Creole translation of Docketbell.
+# Copyright (C) Docketbell contributors
+# This file is distributed under the same license as Docketbell (AGPL-3.0-or-later).
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Docketbell\n"
+"Report-Msgid-Bugs-To: https://github.com/lobojoel2003/Docketbell/issues\n"
+"POT-Creation-Date: 2026-11-07 00:09-0500\n"
+"Last-Translator: Docketbell contributors\n"
+"Language-Team: Haitian Creole <https://github.com/lobojoel2003/Docketbell>\n"
+"Language: ht\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Docketbell administration"
+msgstr ""
+
+msgid "Docketbell"
+msgstr ""
+
+msgid "Settings and records"
+msgstr ""
+
+msgid "message"
+msgstr ""
+
+msgid "built-in text"
+msgstr ""
+
+msgid "placeholders you can use"
+msgstr ""
+
+msgid "Court dates and reminders"
+msgstr ""
+
+msgid "Welcome"
+msgstr ""
+
+msgid "Right after someone is signed up for reminders."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Hi {first_name}, this is {org_name}. We'll text you reminders before your court date: {date} at "
+"{time}, {place}. Reply 1 to confirm you got this. Reply STOP to opt out."
+msgstr ""
+"Bonjou {first_name}, se {org_name} k ap ekri w. N ap voye rapèl ba ou anvan randevou ou nan "
+"tribinal: {date} a {time}, nan {place}. Reponn 1 pou konfime ou resevwa mesaj sa a. Reponn STOP "
+"pou w pa resevwa mesaj ankò."
+
+msgid "Heads-up"
+msgstr ""
+
+msgid "The first countdown reminder, usually a week before. Explains what is at stake."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date is {date} at {time}, {place}. If you miss it, the judge may issue a "
+"warrant for your arrest. Reply 1 to confirm, or 2 if you need help."
+msgstr ""
+"{first_name}, randevou ou nan tribinal se {date} a {time}, nan {place}. Si ou pa ale, jij la ka "
+"bay yon manda pou yo arete w. Reponn 1 pou konfime, oswa 2 si ou bezwen èd."
+
+msgid "Make a plan"
+msgstr ""
+
+msgid "Later countdown reminders, usually 3 days before. Prompts a plan to get there."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date is {date} at {time}. Make a plan now: how you'll get there, and time"
+" off work or childcare if you need it. Reply 2 if something could stop you from going."
+msgstr ""
+"{first_name}, randevou ou nan tribinal se {date} a {time}. Fè yon plan kounye a: ki jan w ap rive "
+"nan tribinal la, epi si w bezwen, mande konje nan travay ou oswa jwenn yon moun pou gade timoun "
+"yo. Reponn 2 si gen yon bagay ki ka anpeche w ale."
+
+msgid "Day before"
+msgstr ""
+
+msgid "The day before the court date."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Reminder: your court date is tomorrow, {date} at {time}, {place}. Please arrive early. Missing "
+"court can lead to a warrant. Questions? Call {org_phone}."
+msgstr ""
+"Rapèl: randevou ou nan tribinal se demen, {date} a {time}, nan {place}. Tanpri rive bonè. Si w pa "
+"ale nan tribinal, yo ka bay yon manda pou arete w. Ou gen kesyon? Rele {org_phone}."
+
+msgid "Morning of"
+msgstr ""
+
+msgid "The morning of the court date (only if 0 is in the reminder schedule)."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Today: your court date is at {time}, {place}. Please arrive early. If you are running late, call "
+"{org_phone}."
+msgstr ""
+"Jodi a: ou gen randevou nan tribinal a {time}, nan {place}. Tanpri rive bonè. Si w ap an reta, "
+"rele {org_phone}."
+
+msgid "Date changed"
+msgstr ""
+
+msgid "When staff change the date or time."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date has changed. The new date is {date} at {time}, {place}. Please go on"
+" the new date. Reply 1 to confirm."
+msgstr ""
+"{first_name}, randevou ou nan tribinal chanje. Nouvo dat la se {date} a {time}, nan {place}. "
+"Tanpri ale nan tribinal nan nouvo dat la. Reponn 1 pou konfime."
+
+msgid "Date canceled"
+msgstr ""
+
+msgid "When staff cancel a court date."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date on {date} was canceled. You do not need to go to court that day. "
+"We'll text you if a new date is set. Questions? Call {org_phone}."
+msgstr ""
+"{first_name}, yo anile randevou ou te genyen nan tribinal pou {date}. Ou pa bezwen ale nan "
+"tribinal jou sa a. N ap voye yon mesaj ba ou si yo fikse yon nouvo dat. Ou gen kesyon? Rele "
+"{org_phone}."
+
+msgid "Missed court"
+msgstr ""
+
+msgid "After staff mark a court date as missed. Encourages a quick call back."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{first_name}, our records show you may have missed court on {date}. It's not too late to fix this."
+" Call {org_phone} today and we'll help you get a new date."
+msgstr ""
+"{first_name}, dapre dosye nou yo, petèt ou te rate randevou ou te genyen nan tribinal pou {date}. "
+"Li poko twò ta pou ranje sa. Rele {org_phone} jodi a, n ap ede w jwenn yon nouvo dat."
+
+msgid "Thanks for confirming"
+msgstr ""
+
+msgid "When someone replies 1 or YES."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Thank you, {first_name}. You're confirmed for {date} at {time}. If anything changes, reply 2 or "
+"call {org_phone}."
+msgstr ""
+"Mèsi, {first_name}. Ou konfime randevou ou pou {date} a {time}. Si gen yon bagay ki chanje, reponn"
+" 2 oswa rele {org_phone}."
+
+msgid "Help is on the way"
+msgstr ""
+
+msgid "When someone replies 2 or NO. Also flags the court date for staff."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Thanks for telling us, {first_name}. Someone from {org_name} will contact you soon. You can also "
+"call {org_phone}. Please don't skip court without talking to us first."
+msgstr ""
+"Mèsi paske ou di nou sa, {first_name}. Yon moun nan {org_name} ap kontakte w byento. Ou ka rele "
+"{org_phone} tou. Tanpri pa manke tribinal san ou pa pale ak nou anvan."
+
+msgid "Opted out"
+msgstr ""
+
+msgid "When someone replies STOP."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"You won't get more texts from {org_name}. Reply START to get reminders again. Questions about your"
+" case? Call {org_phone}."
+msgstr ""
+"Ou p ap resevwa mesaj nan men {org_name} ankò. Reponn START pou w resevwa rapèl yo ankò. Ou gen "
+"kesyon sou ka ou? Rele {org_phone}."
+
+msgid "Opted back in"
+msgstr ""
+
+msgid "When someone replies START after opting out."
+msgstr ""
+
+#. Translators: SMS reply to START. Keep "STOP" in Latin letters.
+#, python-brace-format
+msgid "You'll get court date reminders from {org_name} again. Reply STOP to opt out."
+msgstr ""
+"W ap resevwa rapèl pou randevou tribinal ou yo nan men {org_name} ankò. Reponn STOP pou w pa "
+"resevwa mesaj ankò."
+
+msgid "Help and info"
+msgstr ""
+
+msgid "When someone replies HELP or INFO."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"{org_name}: court date reminders. Reply 1 to confirm your date, 2 if you need help. Call "
+"{org_phone} with questions. Reply STOP to opt out. Msg & data rates may apply."
+msgstr ""
+"{org_name}: rapèl pou randevou tribinal. Reponn 1 pou konfime dat ou, oswa 2 si ou bezwen èd. Si "
+"ou gen kesyon, rele {org_phone}. Reponn STOP pou w pa resevwa mesaj ankò. Ka gen frè pou mesaj ak "
+"done."
+
+msgid "Didn't understand"
+msgstr ""
+
+msgid "When a reply isn't a keyword. Sent at most once a day; staff see the message."
+msgstr ""
+
+msgid ""
+"Sorry, we couldn't read that. Reply 1 to confirm your court date or 2 if you need help. A staff "
+"member will also read your message."
+msgstr ""
+"Padon, nou pa t ka konprann mesaj ou a. Reponn 1 pou konfime randevou ou nan tribinal, oswa 2 si "
+"ou bezwen èd. Yon anplwaye ap li mesaj ou a tou."
+
+msgid "No upcoming date"
+msgstr ""
+
+msgid "When someone confirms but has no upcoming court date on file."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Thanks. We don't see an upcoming court date for you. If you think that's wrong, call {org_phone}."
+msgstr ""
+"Mèsi. Nou pa wè okenn randevou nan tribinal k ap vini pou ou. Si ou panse se yon erè, rele "
+"{org_phone}."
+
+msgid "Language changed"
+msgstr ""
+
+msgid "When someone texts the name of a language, such as ESPAÑOL."
+msgstr ""
+
+#. Translators: SMS reply confirming the language switch. Name YOUR
+#. language here (for Spanish: "en español"). Keep "STOP".
+msgid "OK. We'll text you in English from now on. Reply STOP to opt out."
+msgstr ""
+"Dakò. Apati kounye a, n ap voye mesaj ba ou an kreyòl ayisyen. Reponn STOP pou w pa resevwa mesaj "
+"ankò."
+
+msgid "Person's first name"
+msgstr ""
+
+msgid "Your organization's name"
+msgstr ""
+
+msgid "Your phone number for questions"
+msgstr ""
+
+msgid "Court date, e.g. Tuesday, November 17"
+msgstr ""
+
+msgid "Court time, e.g. 9:30 AM"
+msgstr ""
+
+msgid "Court, room and address on one line"
+msgstr ""
+
+msgid "Court name"
+msgstr ""
+
+msgid "Court address"
+msgstr ""
+
+msgid "Courtroom"
+msgstr ""
+
+#, python-format
+msgid "Can't read the date %(value)r. Use 2026-11-17 or 11/17/2026."
+msgstr ""
+
+#, python-format
+msgid "Can't read the time %(value)r. Use 14:30 or 2:30 PM."
+msgstr ""
+
+#, python-format
+msgid "Unknown language %(value)r."
+msgstr ""
+
+#, python-format
+msgid "Missing columns: %(names)s"
+msgstr ""
+
+msgid "first_name is empty."
+msgstr ""
+
+#, python-format
+msgid "%(value)r isn't a valid phone number."
+msgstr ""
+
+#, python-format
+msgid "Unknown court %(value)r. Add it in the admin first, or fix the spelling."
+msgstr ""
+
+msgid "Court date is in the past."
+msgstr ""
+
+msgid "New date is in the past."
+msgstr ""
+
+#, python-format
+msgid "%(value)s is not a known time zone."
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "address"
+msgstr ""
+
+msgid "One line, written the way it should appear in texts."
+msgstr ""
+
+msgid "time zone"
+msgstr ""
+
+msgid "phone"
+msgstr ""
+
+msgid "website"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "court"
+msgstr ""
+
+msgid "courts"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Undeliverable"
+msgstr ""
+
+msgid "first name"
+msgstr ""
+
+msgid "last name"
+msgstr ""
+
+msgid "mobile phone"
+msgstr ""
+
+msgid "Stored in international format, e.g. +12125550123."
+msgstr ""
+
+msgid "language"
+msgstr ""
+
+msgid "opted out"
+msgstr ""
+
+msgid "phone status"
+msgstr ""
+
+msgid "external ID"
+msgstr ""
+
+msgid "ID from your case management system, if any."
+msgstr ""
+
+msgid "notes"
+msgstr ""
+
+msgid "person"
+msgstr ""
+
+msgid "people"
+msgstr ""
+
+msgid "Name removed"
+msgstr ""
+
+msgid "Needs help"
+msgstr ""
+
+msgid "Confirmed"
+msgstr ""
+
+msgid "No reply yet"
+msgstr ""
+
+msgid "Can't reach"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Canceled"
+msgstr ""
+
+msgid "Attended"
+msgstr ""
+
+msgid "Missed"
+msgstr ""
+
+msgid "date and time"
+msgstr ""
+
+msgid "room"
+msgstr ""
+
+msgid "For example: Courtroom 4B"
+msgstr ""
+
+msgid "hearing type"
+msgstr ""
+
+msgid "For example: Arraignment"
+msgstr ""
+
+msgid "case number"
+msgstr ""
+
+msgid "For staff only. Never included in texts."
+msgstr ""
+
+msgid "status"
+msgstr ""
+
+msgid "confirmed"
+msgstr ""
+
+msgid "asked for help"
+msgstr ""
+
+msgid "help resolved"
+msgstr ""
+
+msgid "court date"
+msgstr ""
+
+msgid "court dates"
+msgstr ""
+
+msgid "Sent"
+msgstr ""
+
+msgid "Received"
+msgstr ""
+
+msgid "Delivered"
+msgstr ""
+
+msgid "Not delivered"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "Asked for help"
+msgstr ""
+
+msgid "Asked for info"
+msgstr ""
+
+msgid "Changed language"
+msgstr ""
+
+msgid "Needs a reply"
+msgstr ""
+
+msgid "messages"
+msgstr ""
+
+msgid "Staff text"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Skipped"
+msgstr ""
+
+msgid "reminder"
+msgstr ""
+
+msgid "reminders"
+msgstr ""
+
+msgid "text"
+msgstr ""
+
+msgid "custom message text"
+msgstr ""
+
+msgid "custom message texts"
+msgstr ""
+
+msgid "Unknown message kind."
+msgstr ""
+
+#, python-format
+msgid "Unknown placeholders: %(names)s. Allowed: %(allowed)s."
+msgstr ""
+
+msgid "worker heartbeat"
+msgstr ""
+
+msgid "worker heartbeats"
+msgstr ""
+
+#, python-format
+msgid "%(number)s doesn't look like a valid mobile number."
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Court"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Time"
+msgstr ""
+
+msgid "Hearing type"
+msgstr ""
+
+msgid "Case number"
+msgstr ""
+
+msgid "The court date must be in the future."
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Mobile phone"
+msgstr ""
+
+msgid "Texts in"
+msgstr ""
+
+msgid "This person agreed to get text reminders."
+msgstr ""
+
+msgid "They can reply STOP at any time."
+msgstr ""
+
+msgid "Text the person if the date or time changes"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Reply as this person"
+msgstr ""
+
+msgid "CSV file"
+msgstr ""
+
+msgid "Check the file only (don't save anything)"
+msgstr ""
+
+msgid "Text people whose court date changed"
+msgstr ""
+
+msgid "Files must be smaller than 5 MB."
+msgstr ""
+
+msgid "Save the file as CSV with UTF-8 encoding."
+msgstr ""
+
+msgid "Pages"
+msgstr ""
+
+msgid "Previous"
+msgstr ""
+
+#, python-format
+msgid "Page %(n)s of %(total)s"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Reminders"
+msgstr ""
+
+msgid "Text messages"
+msgstr ""
+
+#, python-format
+msgid "Sent by %(name)s"
+msgstr ""
+
+#, python-format
+msgid "%(n)s segment"
+msgid_plural "%(n)s segments"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Mark handled"
+msgstr ""
+
+msgid "No texts yet. The welcome text goes out during the next send window."
+msgstr ""
+
+msgid "Upcoming"
+msgstr ""
+
+msgid "Court date"
+msgstr ""
+
+msgid "When"
+msgstr ""
+
+msgid "Where"
+msgstr ""
+
+msgid "Hearing"
+msgstr ""
+
+msgid "Case"
+msgstr ""
+
+msgid "not in texts"
+msgstr ""
+
+msgid "Status"
+msgstr ""
+
+#, python-format
+msgid "confirmed %(when)s"
+msgstr ""
+
+msgid "Change date or details"
+msgstr ""
+
+msgid "Person"
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Texts"
+msgstr ""
+
+msgid "Subscribed"
+msgstr ""
+
+#, python-format
+msgid "%(n)s other court date"
+msgid_plural "%(n)s other court dates"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "See all"
+msgstr ""
+
+msgid "Actions"
+msgstr ""
+
+msgid "Help request handled"
+msgstr ""
+
+msgid "Mark confirmed (by phone)"
+msgstr ""
+
+msgid "Came to court"
+msgstr ""
+
+msgid "Missed court…"
+msgstr ""
+
+msgid "Text them a kind follow-up asking them to call"
+msgstr ""
+
+msgid "Record missed court"
+msgstr ""
+
+msgid "Cancel court date…"
+msgstr ""
+
+msgid "Tell them by text that they don't need to go"
+msgstr ""
+
+msgid "Cancel this court date"
+msgstr ""
+
+msgid "Outcome"
+msgstr ""
+
+msgid "Add a new court date"
+msgstr ""
+
+msgid "Conversation"
+msgstr ""
+
+msgid "Write a text"
+msgstr ""
+
+#, python-format
+msgid "Write a text to %(name)s…"
+msgstr ""
+
+msgid "Send"
+msgstr ""
+
+msgid "Training mode: reply as this person"
+msgstr ""
+
+msgid "Question"
+msgstr ""
+
+msgid "Reminder schedule"
+msgstr ""
+
+#, python-format
+msgid "%(n)s attempt"
+msgid_plural "%(n)s attempts"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Nothing scheduled."
+msgstr ""
+
+msgid "Change court date"
+msgstr ""
+
+msgid "optional"
+msgstr ""
+
+msgid ""
+"If the date or time changes, reminders are rebuilt and the person gets a short 'your date changed'"
+" text."
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "New court date"
+msgstr ""
+
+msgid ""
+"They'll get a welcome text right away (inside the send window), then reminders before the date."
+msgstr ""
+
+#, python-format
+msgid "For %(name)s (%(phone)s)"
+msgstr ""
+
+msgid "Add and start reminders"
+msgstr ""
+
+msgid "Court dates"
+msgstr ""
+
+#, python-format
+msgid "%(n)s court date"
+msgid_plural "%(n)s court dates"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Past"
+msgstr ""
+
+msgid "Any status"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Name, phone or case"
+msgstr ""
+
+msgid "No court dates match."
+msgstr ""
+
+msgid "Upcoming court dates"
+msgstr ""
+
+#, python-format
+msgid "%(n)s court date in the next %(days)s days"
+msgid_plural "%(n)s court dates in the next %(days)s days"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Date range"
+msgstr ""
+
+#, python-format
+msgid "%(r)s days"
+msgstr ""
+
+msgid "All courts"
+msgstr ""
+
+#, python-format
+msgid "%(n)s of %(total)s people have replied to confirm"
+msgstr ""
+
+msgid "Replies"
+msgstr ""
+
+#, python-format
+msgid "%(n)s text sent this week"
+msgid_plural "%(n)s texts sent this week"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(n)s reply"
+msgid_plural "%(n)s replies"
+msgstr[0] ""
+msgstr[1] ""
+
+#, python-format
+msgid "%(n)s person asked for help"
+msgid_plural "%(n)s people asked for help"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"They replied 2 or said they can't make it. A call today can keep a warrant from being issued."
+msgstr ""
+
+msgid "Showing"
+msgstr ""
+
+msgid "Show everyone"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Tomorrow"
+msgstr ""
+
+msgid "Reply"
+msgstr ""
+
+msgid "Nobody in this group right now."
+msgstr ""
+
+msgid "No court dates coming up."
+msgstr ""
+
+msgid "Add one, or import a spreadsheet from your case management system."
+msgstr ""
+
+msgid "Import CSV"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "Import court dates"
+msgstr ""
+
+msgid ""
+"Upload a CSV export from your case management system. Re-importing is safe: new dates are added, "
+"moved dates are rescheduled, and unchanged rows are skipped."
+msgstr ""
+
+msgid "Download template"
+msgstr ""
+
+msgid "Upload"
+msgstr ""
+
+msgid "Check complete. Nothing was saved."
+msgstr ""
+
+msgid "Import complete"
+msgstr ""
+
+msgid "Would add"
+msgstr ""
+
+msgid "Added"
+msgstr ""
+
+msgid "Would update"
+msgstr ""
+
+msgid "Updated"
+msgstr ""
+
+msgid "Unchanged"
+msgstr ""
+
+msgid "Problems"
+msgstr ""
+
+msgid "Line"
+msgstr ""
+
+msgid "Problem"
+msgstr ""
+
+msgid "Looks good. Untick “Check the file only” and upload again to import."
+msgstr ""
+
+msgid "Columns"
+msgstr ""
+
+msgid "required"
+msgstr ""
+
+msgid ""
+"Dates like 2026-11-17 or 11/17/2026. Times like 14:30 or 2:30 PM. Language as a code (es) or a "
+"name (Spanish)."
+msgstr ""
+
+msgid "Court names must match a court in the admin:"
+msgstr ""
+
+msgid "none yet"
+msgstr ""
+
+msgid "Inbox"
+msgstr ""
+
+msgid "Replies that need a person: questions, requests for help, and texts from unknown numbers."
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "All replies"
+msgstr ""
+
+msgid "Unknown number"
+msgstr ""
+
+#, python-format
+msgid "Handled %(when)s %(who)s"
+msgstr ""
+
+msgid "All caught up."
+msgstr ""
+
+msgid "Replies that need a person show up here."
+msgstr ""
+
+msgid "People"
+msgstr ""
+
+msgid "Add court date"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "No court dates yet."
+msgstr ""
+
+#, python-format
+msgid "%(n)s person"
+msgid_plural "%(n)s people"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Name or phone"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Next court date"
+msgstr ""
+
+msgid "Nobody matches."
+msgstr ""
+
+msgid "Results"
+msgstr ""
+
+msgid "Did people come to court? Based on outcomes staff recorded."
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "30 days"
+msgstr ""
+
+msgid "90 days"
+msgstr ""
+
+msgid "1 year"
+msgstr ""
+
+#, python-format
+msgid "%(a)s of %(t)s court dates with a recorded outcome"
+msgstr ""
+
+#, python-format
+msgid "%(n)s past court date has no outcome yet"
+msgid_plural "%(n)s past court dates have no outcome yet"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Appearance rate by reply"
+msgstr ""
+
+#, python-format
+msgid "%(n)s date"
+msgid_plural "%(n)s dates"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid ""
+"People who confirm may differ from people who don't, so this shows a pattern, not proof that texts"
+" caused it."
+msgstr ""
+
+msgid "Texts sent"
+msgstr ""
+
+#, python-format
+msgid "%(n)s failed"
+msgid_plural "%(n)s failed"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Opt-outs"
+msgstr ""
+
+msgid "Estimated SMS cost"
+msgstr ""
+
+#, python-format
+msgid "%(n)s segments"
+msgstr ""
+
+msgid "Appearance by reply"
+msgstr ""
+
+msgid "Rate"
+msgstr ""
+
+msgid "All"
+msgstr ""
+
+msgid "Messages"
+msgstr ""
+
+msgid ""
+"Every text Docketbell sends, exactly as people see it. Edit any of them in the admin under Custom "
+"message texts."
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Texts per court date"
+msgstr ""
+
+msgid "welcome +"
+msgstr ""
+
+msgid "days before, at"
+msgstr ""
+
+msgid "SMS segments"
+msgstr ""
+
+msgid "carriers bill per segment"
+msgstr ""
+
+msgid "Cost per court date"
+msgstr ""
+
+#, python-format
+msgid "at %(price)s per segment"
+msgstr ""
+
+msgid "Reminders and notices"
+msgstr ""
+
+msgid "Automatic replies"
+msgstr ""
+
+msgid "Custom"
+msgstr ""
+
+#, python-format
+msgid "%(n)s characters"
+msgstr ""
+
+msgid ""
+"Uses characters outside the basic SMS alphabet, so each segment holds 70 characters instead of "
+"160."
+msgstr ""
+
+msgid "Basic SMS alphabet: 160 characters per segment."
+msgstr ""
+
+msgid "Add a court in the admin before adding court dates."
+msgstr ""
+
+#, python-format
+msgid "Added. %(name)s will get a welcome text, then reminders before the date."
+msgstr ""
+
+msgid "Court date moved. Reminders were rescheduled."
+msgstr ""
+
+msgid "Saved."
+msgstr ""
+
+msgid "Marked as confirmed."
+msgstr ""
+
+msgid "Confirmation removed."
+msgstr ""
+
+msgid "Marked as handled."
+msgstr ""
+
+msgid "Recorded: came to court."
+msgstr ""
+
+msgid "Recorded: missed court. A follow-up text is on its way."
+msgstr ""
+
+msgid "Recorded: missed court."
+msgstr ""
+
+msgid "Court date canceled. Pending reminders were stopped."
+msgstr ""
+
+msgid "Write a message first."
+msgstr ""
+
+msgid "This person opted out of texts. Call them instead."
+msgstr ""
+
+msgid "Text sent."
+msgstr ""
+
+#, python-format
+msgid "The text could not be sent: %(error)s"
+msgstr ""
+
+#, python-format
+msgid "Simulated reply understood as: %(intent)s"
+msgstr ""
+
+#, python-format
+msgid "Scheduled %(days)s day before."
+msgid_plural "Scheduled %(days)s days before."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Confirmed by text"
+msgstr ""
+
+msgid "Never replied"
+msgstr ""
+
+msgid "SMS"
+msgstr ""
+
+msgid "Not found"
+msgstr ""
+
+msgid "We couldn't find that page."
+msgstr ""
+
+msgid "Back to the dashboard"
+msgstr ""
+
+msgid "Skip to content"
+msgstr ""
+
+msgid "Main"
+msgstr ""
+
+#, python-format
+msgid "%(n)s needs a reply"
+msgid_plural "%(n)s need a reply"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Account"
+msgstr ""
+
+msgid "Admin and settings"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Reminders are not going out."
+msgstr ""
+
+#, python-format
+msgid "%(n)s reminder is overdue."
+msgid_plural "%(n)s reminders are overdue."
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Start the worker with"
+msgstr ""
+
+msgid "Dashboard language"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+#, python-format
+msgid "Court date reminders for %(org_name)s"
+msgstr ""
+
+msgid "That username and password didn't match. Try again."
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Password"
+msgstr ""

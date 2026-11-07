@@ -1,0 +1,29 @@
+{% extends "base.html" %}{% load i18n %}
+{% block title %}{% translate "New court date" %}{% endblock %}
+{% block content %}
+{% translate "optional" as optional_label %}
+<div class="page-head"><div>
+  <h1>{% translate "New court date" %}</h1>
+  <p class="muted">{% translate "They'll get a welcome text right away (inside the send window), then reminders before the date." %}</p>
+</div></div>
+<form method="post" class="form-grid card" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="flash flash--error span-2">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+  {% if person %}
+  <div class="span-2 notice">{% blocktranslate with name=person.full_name phone=person.phone_display %}For {{ name }} ({{ phone }}){% endblocktranslate %}</div>
+  {% else %}
+  <fieldset class="span-2 form-section"><legend>{% translate "Person" %}</legend>
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.first_name %}{% include "dashboard/_field.html" with field=form.last_name %}</div>
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.phone %}{% include "dashboard/_field.html" with field=form.language %}</div>
+    {% include "dashboard/_field.html" with field=form.consent %}
+  </fieldset>
+  {% endif %}
+  <fieldset class="span-2 form-section"><legend>{% translate "Court date" %}</legend>
+    {% include "dashboard/_field.html" with field=form.court %}
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.date %}{% include "dashboard/_field.html" with field=form.time %}</div>
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.room %}{% include "dashboard/_field.html" with field=form.hearing_type %}</div>
+    {% include "dashboard/_field.html" with field=form.case_number %}
+  </fieldset>
+  <div class="span-2 form-actions"><button class="btn btn--primary" type="submit">{% translate "Add and start reminders" %}</button> <a class="btn btn--quiet" href="{% url 'dashboard:home' %}">{% translate "Cancel" %}</a></div>
+</form>
+{% endblock %}

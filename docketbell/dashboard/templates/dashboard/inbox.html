@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Inbox" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "Inbox" %}</h1><p class="muted">{% translate "Replies that need a person: questions, requests for help, and texts from unknown numbers." %}</p></div>
+  <div class="segmented" role="group" aria-label="{% translate 'Show' %}">
+    <a href="?show=open" {% if show == 'open' %}aria-current="true"{% endif %}>{% translate "Needs a reply" %}</a>
+    <a href="?show=all" {% if show == 'all' %}aria-current="true"{% endif %}>{% translate "All replies" %}</a>
+  </div>
+</div>
+<ul class="inbox">
+  {% for m in page %}
+  <li class="card inbox__item {% if m.handled_at %}is-handled{% endif %}">
+    <div class="inbox__who">
+      {% if m.person %}<a href="{% if m.court_date %}{% url 'dashboard:court-date' m.court_date.pk %}{% else %}{% url 'dashboard:person' m.person.pk %}{% endif %}"><strong>{{ m.person.full_name }}</strong></a>{% else %}<strong>{% translate "Unknown number" %}</strong>{% endif %}
+      <span class="muted">{{ m.phone|phone }} · {{ m.created_at|date:"M j, g:i A" }}</span>
+      {% if m.court_date %}<span class="muted small">{% translate "Court" %}: {{ m.court_date|court_time:"D, M j" }} · {{ m.court_date.court.name }}</span>{% endif %}
+    </div>
+    <blockquote class="bubble bubble--in" dir="auto">{{ m.body }}</blockquote>
+    <div class="inbox__actions">
+      <span class="intent intent--{{ m.intent }}">{{ m.get_intent_display }}</span>
+      {% if m.handled_at %}<span class="muted small">{% blocktranslate with who=m.handled_by.get_username|default:"" when=m.handled_at|date:"M j" %}Handled {{ when }} {{ who }}{% endblocktranslate %}</span>
+      {% elif m.needs_attention %}<form method="post" action="{% url 'dashboard:inbox-handle' m.pk %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="btn btn--sm" type="submit">{% icon "check" %} {% translate "Mark handled" %}</button></form>{% endif %}
+    </div>
+  </li>
+  {% empty %}
+  <li class="empty card">{% icon "inbox" "icon--xl" %}<h2>{% translate "All caught up." %}</h2><p class="muted">{% translate "Replies that need a person show up here." %}</p></li>
+  {% endfor %}
+</ul>
+{% include "dashboard/_pagination.html" %}
+{% endblock %}

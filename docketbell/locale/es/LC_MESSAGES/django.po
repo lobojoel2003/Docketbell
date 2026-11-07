@@ -1,0 +1,1283 @@
+# Spanish translation of Docketbell.
+# Copyright (C) Docketbell contributors
+# This file is distributed under the same license as Docketbell (AGPL-3.0-or-later).
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Docketbell\n"
+"Report-Msgid-Bugs-To: https://github.com/lobojoel2003/Docketbell/issues\n"
+"POT-Creation-Date: 2026-11-07 00:09-0500\n"
+"Last-Translator: Docketbell contributors\n"
+"Language-Team: Spanish <https://github.com/lobojoel2003/Docketbell>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Docketbell administration"
+msgstr "Administración de Docketbell"
+
+msgid "Docketbell"
+msgstr "Docketbell"
+
+msgid "Settings and records"
+msgstr "Configuración y registros"
+
+msgid "message"
+msgstr "mensaje"
+
+msgid "built-in text"
+msgstr "texto predeterminado"
+
+msgid "placeholders you can use"
+msgstr "marcadores que puede usar"
+
+msgid "Court dates and reminders"
+msgstr "Citas en la corte y recordatorios"
+
+msgid "Welcome"
+msgstr "Bienvenida"
+
+msgid "Right after someone is signed up for reminders."
+msgstr "Justo después de que alguien se inscribe para recibir recordatorios."
+
+#, python-brace-format
+msgid ""
+"Hi {first_name}, this is {org_name}. We'll text you reminders before your court date: {date} at "
+"{time}, {place}. Reply 1 to confirm you got this. Reply STOP to opt out."
+msgstr ""
+"Hola, {first_name}. Le escribe {org_name}. Le enviaremos recordatorios por mensaje de texto antes "
+"de su cita en la corte: el {date} a las {time}, en {place}. Responda 1 para confirmar que recibió "
+"este mensaje. Responda STOP para no recibir más mensajes."
+
+msgid "Heads-up"
+msgstr "Aviso"
+
+msgid "The first countdown reminder, usually a week before. Explains what is at stake."
+msgstr ""
+"El primer recordatorio de la cuenta regresiva, normalmente una semana antes. Explica lo que está "
+"en juego."
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date is {date} at {time}, {place}. If you miss it, the judge may issue a "
+"warrant for your arrest. Reply 1 to confirm, or 2 if you need help."
+msgstr ""
+"{first_name}, su cita en la corte es el {date} a las {time}, en {place}. Si falta, el juez puede "
+"emitir una orden de arresto en su contra. Responda 1 para confirmar o 2 si necesita ayuda."
+
+msgid "Make a plan"
+msgstr "Hacer un plan"
+
+msgid "Later countdown reminders, usually 3 days before. Prompts a plan to get there."
+msgstr ""
+"Recordatorios posteriores de la cuenta regresiva, normalmente 3 días antes. Invita a planear cómo "
+"llegar."
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date is {date} at {time}. Make a plan now: how you'll get there, and time"
+" off work or childcare if you need it. Reply 2 if something could stop you from going."
+msgstr ""
+"{first_name}, su cita en la corte es el {date} a las {time}. Haga un plan ahora: cómo va a llegar "
+"y, si lo necesita, permiso en el trabajo o alguien que cuide a sus niños. Responda 2 si algo "
+"podría impedirle ir."
+
+msgid "Day before"
+msgstr "Día anterior"
+
+msgid "The day before the court date."
+msgstr "El día antes de la cita en la corte."
+
+#, python-brace-format
+msgid ""
+"Reminder: your court date is tomorrow, {date} at {time}, {place}. Please arrive early. Missing "
+"court can lead to a warrant. Questions? Call {org_phone}."
+msgstr ""
+"Recordatorio: su cita en la corte es mañana, {date}, a las {time}, en {place}. Por favor, llegue "
+"temprano. Si falta a la corte, se puede emitir una orden de arresto. ¿Preguntas? Llame al "
+"{org_phone}."
+
+msgid "Morning of"
+msgstr "Mañana de la cita"
+
+msgid "The morning of the court date (only if 0 is in the reminder schedule)."
+msgstr "La mañana de la cita en la corte (solo si 0 está en el calendario de recordatorios)."
+
+#, python-brace-format
+msgid ""
+"Today: your court date is at {time}, {place}. Please arrive early. If you are running late, call "
+"{org_phone}."
+msgstr ""
+"Hoy: su cita en la corte es a las {time}, en {place}. Por favor, llegue temprano. Si va a llegar "
+"tarde, llame al {org_phone}."
+
+msgid "Date changed"
+msgstr "Cambio de fecha"
+
+msgid "When staff change the date or time."
+msgstr "Cuando el personal cambia la fecha o la hora."
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date has changed. The new date is {date} at {time}, {place}. Please go on"
+" the new date. Reply 1 to confirm."
+msgstr ""
+"{first_name}, su cita en la corte cambió. La nueva fecha es el {date} a las {time}, en {place}. "
+"Por favor, vaya a la corte en la nueva fecha. Responda 1 para confirmar."
+
+msgid "Date canceled"
+msgstr "Cita cancelada"
+
+msgid "When staff cancel a court date."
+msgstr "Cuando el personal cancela una cita en la corte."
+
+#, python-brace-format
+msgid ""
+"{first_name}, your court date on {date} was canceled. You do not need to go to court that day. "
+"We'll text you if a new date is set. Questions? Call {org_phone}."
+msgstr ""
+"{first_name}, su cita en la corte del {date} fue cancelada. No necesita ir a la corte ese día. Le "
+"avisaremos por mensaje si se fija una nueva fecha. ¿Preguntas? Llame al {org_phone}."
+
+msgid "Missed court"
+msgstr "Faltó a la corte"
+
+msgid "After staff mark a court date as missed. Encourages a quick call back."
+msgstr ""
+"Después de que el personal registra que la persona faltó a la corte. Le pide que llame pronto."
+
+#, python-brace-format
+msgid ""
+"{first_name}, our records show you may have missed court on {date}. It's not too late to fix this."
+" Call {org_phone} today and we'll help you get a new date."
+msgstr ""
+"{first_name}, según nuestros registros, es posible que no haya ido a la corte el {date}. Todavía "
+"está a tiempo de arreglarlo. Llame hoy al {org_phone} y le ayudaremos a conseguir una nueva fecha."
+
+msgid "Thanks for confirming"
+msgstr "Gracias por confirmar"
+
+msgid "When someone replies 1 or YES."
+msgstr "Cuando alguien responde 1 o YES."
+
+#, python-brace-format
+msgid ""
+"Thank you, {first_name}. You're confirmed for {date} at {time}. If anything changes, reply 2 or "
+"call {org_phone}."
+msgstr ""
+"Gracias, {first_name}. Usted confirmó que irá a la corte el {date} a las {time}. Si algo cambia, "
+"responda 2 o llame al {org_phone}."
+
+msgid "Help is on the way"
+msgstr "La ayuda va en camino"
+
+msgid "When someone replies 2 or NO. Also flags the court date for staff."
+msgstr ""
+"Cuando alguien responde 2 o NO. También marca la cita en la corte para que el personal la revise."
+
+#, python-brace-format
+msgid ""
+"Thanks for telling us, {first_name}. Someone from {org_name} will contact you soon. You can also "
+"call {org_phone}. Please don't skip court without talking to us first."
+msgstr ""
+"Gracias por avisarnos, {first_name}. Alguien de {org_name} se comunicará con usted pronto. También"
+" puede llamar al {org_phone}. Por favor, no falte a la corte sin antes hablar con nosotros."
+
+msgid "Opted out"
+msgstr "Se dio de baja"
+
+msgid "When someone replies STOP."
+msgstr "Cuando alguien responde STOP."
+
+#, python-brace-format
+msgid ""
+"You won't get more texts from {org_name}. Reply START to get reminders again. Questions about your"
+" case? Call {org_phone}."
+msgstr ""
+"Ya no recibirá mensajes de {org_name}. Responda START para volver a recibir recordatorios. ¿Tiene "
+"preguntas sobre su caso? Llame al {org_phone}."
+
+msgid "Opted back in"
+msgstr "Volvió a suscribirse"
+
+msgid "When someone replies START after opting out."
+msgstr "Cuando alguien responde START después de haberse dado de baja."
+
+#. Translators: SMS reply to START. Keep "STOP" in Latin letters.
+#, python-brace-format
+msgid "You'll get court date reminders from {org_name} again. Reply STOP to opt out."
+msgstr ""
+"{org_name} volverá a enviarle recordatorios de sus citas en la corte. Responda STOP para no "
+"recibir más mensajes."
+
+msgid "Help and info"
+msgstr "Ayuda e información"
+
+msgid "When someone replies HELP or INFO."
+msgstr "Cuando alguien responde HELP o INFO."
+
+#, python-brace-format
+msgid ""
+"{org_name}: court date reminders. Reply 1 to confirm your date, 2 if you need help. Call "
+"{org_phone} with questions. Reply STOP to opt out. Msg & data rates may apply."
+msgstr ""
+"{org_name}: recordatorios de citas en la corte. Responda 1 para confirmar su cita o 2 si necesita "
+"ayuda. Si tiene preguntas, llame al {org_phone}. Responda STOP para no recibir más mensajes. "
+"Pueden aplicarse tarifas de mensajes y datos."
+
+msgid "Didn't understand"
+msgstr "No se entendió"
+
+msgid "When a reply isn't a keyword. Sent at most once a day; staff see the message."
+msgstr ""
+"Cuando una respuesta no es una palabra clave. Se envía como máximo una vez al día; el personal ve "
+"el mensaje."
+
+msgid ""
+"Sorry, we couldn't read that. Reply 1 to confirm your court date or 2 if you need help. A staff "
+"member will also read your message."
+msgstr ""
+"Lo sentimos, no pudimos entender su mensaje. Responda 1 para confirmar su cita en la corte o 2 si "
+"necesita ayuda. Una persona de nuestro equipo también leerá su mensaje."
+
+msgid "No upcoming date"
+msgstr "Sin cita próxima"
+
+msgid "When someone confirms but has no upcoming court date on file."
+msgstr "Cuando alguien confirma pero no tiene ninguna cita próxima en la corte registrada."
+
+#, python-brace-format
+msgid ""
+"Thanks. We don't see an upcoming court date for you. If you think that's wrong, call {org_phone}."
+msgstr ""
+"Gracias. No vemos ninguna cita próxima en la corte para usted. Si cree que es un error, llame al "
+"{org_phone}."
+
+msgid "Language changed"
+msgstr "Cambio de idioma"
+
+msgid "When someone texts the name of a language, such as ESPAÑOL."
+msgstr "Cuando alguien envía por mensaje el nombre de un idioma, como ESPAÑOL."
+
+#. Translators: SMS reply confirming the language switch. Name YOUR
+#. language here (for Spanish: "en español"). Keep "STOP".
+msgid "OK. We'll text you in English from now on. Reply STOP to opt out."
+msgstr ""
+"De acuerdo. A partir de ahora le enviaremos los mensajes en español. Responda STOP para no recibir"
+" más mensajes."
+
+msgid "Person's first name"
+msgstr "Nombre de la persona"
+
+msgid "Your organization's name"
+msgstr "Nombre de su organización"
+
+msgid "Your phone number for questions"
+msgstr "Su número de teléfono para preguntas"
+
+msgid "Court date, e.g. Tuesday, November 17"
+msgstr "Fecha de la cita en la corte, p. ej., martes 17 de noviembre"
+
+msgid "Court time, e.g. 9:30 AM"
+msgstr "Hora de la cita en la corte, p. ej., 9:30 AM"
+
+msgid "Court, room and address on one line"
+msgstr "Corte, sala y dirección en una línea"
+
+msgid "Court name"
+msgstr "Nombre de la corte"
+
+msgid "Court address"
+msgstr "Dirección de la corte"
+
+msgid "Courtroom"
+msgstr "Sala"
+
+#, python-format
+msgid "Can't read the date %(value)r. Use 2026-11-17 or 11/17/2026."
+msgstr "No se puede leer la fecha %(value)r. Use 2026-11-17 o 11/17/2026."
+
+#, python-format
+msgid "Can't read the time %(value)r. Use 14:30 or 2:30 PM."
+msgstr "No se puede leer la hora %(value)r. Use 14:30 o 2:30 PM."
+
+#, python-format
+msgid "Unknown language %(value)r."
+msgstr "Idioma desconocido: %(value)r."
+
+#, python-format
+msgid "Missing columns: %(names)s"
+msgstr "Faltan columnas: %(names)s"
+
+msgid "first_name is empty."
+msgstr "first_name está vacío."
+
+#, python-format
+msgid "%(value)r isn't a valid phone number."
+msgstr "%(value)r no es un número de teléfono válido."
+
+#, python-format
+msgid "Unknown court %(value)r. Add it in the admin first, or fix the spelling."
+msgstr ""
+"Corte desconocida: %(value)r. Agréguela primero en la administración o corrija cómo está escrita."
+
+msgid "Court date is in the past."
+msgstr "La cita en la corte ya pasó."
+
+msgid "New date is in the past."
+msgstr "La nueva fecha ya pasó."
+
+#, python-format
+msgid "%(value)s is not a known time zone."
+msgstr "%(value)s no es una zona horaria conocida."
+
+msgid "name"
+msgstr "nombre"
+
+msgid "address"
+msgstr "dirección"
+
+msgid "One line, written the way it should appear in texts."
+msgstr "Una sola línea, escrita tal como debe aparecer en los mensajes."
+
+msgid "time zone"
+msgstr "zona horaria"
+
+msgid "phone"
+msgstr "teléfono"
+
+msgid "website"
+msgstr "sitio web"
+
+msgid "active"
+msgstr "activo"
+
+msgid "court"
+msgstr "corte"
+
+msgid "courts"
+msgstr "cortes"
+
+msgid "OK"
+msgstr "Correcto"
+
+msgid "Undeliverable"
+msgstr "No entregable"
+
+msgid "first name"
+msgstr "nombre"
+
+msgid "last name"
+msgstr "apellido"
+
+msgid "mobile phone"
+msgstr "teléfono celular"
+
+msgid "Stored in international format, e.g. +12125550123."
+msgstr "Se guarda en formato internacional, p. ej., +12125550123."
+
+msgid "language"
+msgstr "idioma"
+
+msgid "opted out"
+msgstr "se dio de baja"
+
+msgid "phone status"
+msgstr "estado del teléfono"
+
+msgid "external ID"
+msgstr "ID externo"
+
+msgid "ID from your case management system, if any."
+msgstr "ID de su sistema de gestión de casos, si lo hay."
+
+msgid "notes"
+msgstr "notas"
+
+msgid "person"
+msgstr "persona"
+
+msgid "people"
+msgstr "personas"
+
+msgid "Name removed"
+msgstr "Nombre eliminado"
+
+msgid "Needs help"
+msgstr "Necesita ayuda"
+
+msgid "Confirmed"
+msgstr "Confirmado"
+
+msgid "No reply yet"
+msgstr "Sin respuesta aún"
+
+msgid "Can't reach"
+msgstr "No se puede contactar"
+
+msgid "Scheduled"
+msgstr "Programado"
+
+msgid "Canceled"
+msgstr "Cancelado"
+
+msgid "Attended"
+msgstr "Asistió"
+
+msgid "Missed"
+msgstr "No asistió"
+
+msgid "date and time"
+msgstr "fecha y hora"
+
+msgid "room"
+msgstr "sala"
+
+msgid "For example: Courtroom 4B"
+msgstr "Por ejemplo: Sala 4B"
+
+msgid "hearing type"
+msgstr "tipo de audiencia"
+
+msgid "For example: Arraignment"
+msgstr "Por ejemplo: Lectura de cargos"
+
+msgid "case number"
+msgstr "número de caso"
+
+msgid "For staff only. Never included in texts."
+msgstr "Solo para el personal. Nunca se incluye en los mensajes."
+
+msgid "status"
+msgstr "estado"
+
+msgid "confirmed"
+msgstr "confirmado"
+
+msgid "asked for help"
+msgstr "pidió ayuda"
+
+msgid "help resolved"
+msgstr "ayuda resuelta"
+
+msgid "court date"
+msgstr "cita en la corte"
+
+msgid "court dates"
+msgstr "citas en la corte"
+
+msgid "Sent"
+msgstr "Enviado"
+
+msgid "Received"
+msgstr "Recibido"
+
+msgid "Delivered"
+msgstr "Entregado"
+
+msgid "Not delivered"
+msgstr "No entregado"
+
+msgid "Failed"
+msgstr "Fallido"
+
+msgid "Asked for help"
+msgstr "Pidió ayuda"
+
+msgid "Asked for info"
+msgstr "Pidió información"
+
+msgid "Changed language"
+msgstr "Cambió de idioma"
+
+msgid "Needs a reply"
+msgstr "Necesita respuesta"
+
+msgid "messages"
+msgstr "mensajes"
+
+msgid "Staff text"
+msgstr "Mensaje del personal"
+
+msgid "Text"
+msgstr "Mensaje"
+
+msgid "Skipped"
+msgstr "Omitido"
+
+msgid "reminder"
+msgstr "recordatorio"
+
+msgid "reminders"
+msgstr "recordatorios"
+
+msgid "text"
+msgstr "texto"
+
+msgid "custom message text"
+msgstr "texto de mensaje personalizado"
+
+msgid "custom message texts"
+msgstr "textos de mensajes personalizados"
+
+msgid "Unknown message kind."
+msgstr "Tipo de mensaje desconocido."
+
+#, python-format
+msgid "Unknown placeholders: %(names)s. Allowed: %(allowed)s."
+msgstr "Marcadores desconocidos: %(names)s. Permitidos: %(allowed)s."
+
+msgid "worker heartbeat"
+msgstr "señal de actividad del proceso de envío"
+
+msgid "worker heartbeats"
+msgstr "señales de actividad del proceso de envío"
+
+#, python-format
+msgid "%(number)s doesn't look like a valid mobile number."
+msgstr "%(number)s no parece un número de celular válido."
+
+msgid "Dashboard"
+msgstr "Panel"
+
+msgid "Court"
+msgstr "Corte"
+
+msgid "Date"
+msgstr "Fecha"
+
+msgid "Time"
+msgstr "Hora"
+
+msgid "Hearing type"
+msgstr "Tipo de audiencia"
+
+msgid "Case number"
+msgstr "Número de caso"
+
+msgid "The court date must be in the future."
+msgstr "La cita en la corte debe ser en una fecha futura."
+
+msgid "First name"
+msgstr "Nombre"
+
+msgid "Last name"
+msgstr "Apellido"
+
+msgid "Mobile phone"
+msgstr "Teléfono celular"
+
+msgid "Texts in"
+msgstr "Mensajes en"
+
+msgid "This person agreed to get text reminders."
+msgstr "Esta persona aceptó recibir recordatorios por mensaje de texto."
+
+msgid "They can reply STOP at any time."
+msgstr "La persona puede responder STOP en cualquier momento."
+
+msgid "Text the person if the date or time changes"
+msgstr "Avisar a la persona por mensaje si cambia la fecha o la hora"
+
+msgid "Message"
+msgstr "Mensaje"
+
+msgid "Reply as this person"
+msgstr "Responder como esta persona"
+
+msgid "CSV file"
+msgstr "Archivo CSV"
+
+msgid "Check the file only (don't save anything)"
+msgstr "Solo revisar el archivo (no guardar nada)"
+
+msgid "Text people whose court date changed"
+msgstr "Avisar por mensaje a las personas cuya cita en la corte cambió"
+
+msgid "Files must be smaller than 5 MB."
+msgstr "Los archivos deben pesar menos de 5 MB."
+
+msgid "Save the file as CSV with UTF-8 encoding."
+msgstr "Guarde el archivo como CSV con codificación UTF-8."
+
+msgid "Pages"
+msgstr "Páginas"
+
+msgid "Previous"
+msgstr "Anterior"
+
+#, python-format
+msgid "Page %(n)s of %(total)s"
+msgstr "Página %(n)s de %(total)s"
+
+msgid "Next"
+msgstr "Siguiente"
+
+msgid "Reminders"
+msgstr "Recordatorios"
+
+msgid "Text messages"
+msgstr "Mensajes de texto"
+
+#, python-format
+msgid "Sent by %(name)s"
+msgstr "Enviado por %(name)s"
+
+#, python-format
+msgid "%(n)s segment"
+msgid_plural "%(n)s segments"
+msgstr[0] "%(n)s segmento"
+msgstr[1] "%(n)s segmentos"
+
+msgid "Mark handled"
+msgstr "Marcar como atendido"
+
+msgid "No texts yet. The welcome text goes out during the next send window."
+msgstr "Aún no hay mensajes. El mensaje de bienvenida se enviará en el próximo horario de envío."
+
+msgid "Upcoming"
+msgstr "Próximas"
+
+msgid "Court date"
+msgstr "Cita en la corte"
+
+msgid "When"
+msgstr "Cuándo"
+
+msgid "Where"
+msgstr "Dónde"
+
+msgid "Hearing"
+msgstr "Audiencia"
+
+msgid "Case"
+msgstr "Caso"
+
+msgid "not in texts"
+msgstr "no aparece en los mensajes"
+
+msgid "Status"
+msgstr "Estado"
+
+#, python-format
+msgid "confirmed %(when)s"
+msgstr "confirmado el %(when)s"
+
+msgid "Change date or details"
+msgstr "Cambiar fecha o detalles"
+
+msgid "Person"
+msgstr "Persona"
+
+msgid "Mobile"
+msgstr "Celular"
+
+msgid "Texts"
+msgstr "Mensajes"
+
+msgid "Subscribed"
+msgstr "Suscrito"
+
+#, python-format
+msgid "%(n)s other court date"
+msgid_plural "%(n)s other court dates"
+msgstr[0] "%(n)s cita más en la corte"
+msgstr[1] "%(n)s citas más en la corte"
+
+msgid "See all"
+msgstr "Ver todas"
+
+msgid "Actions"
+msgstr "Acciones"
+
+msgid "Help request handled"
+msgstr "Solicitud de ayuda atendida"
+
+msgid "Mark confirmed (by phone)"
+msgstr "Marcar como confirmada (por teléfono)"
+
+msgid "Came to court"
+msgstr "Asistió a la corte"
+
+msgid "Missed court…"
+msgstr "Faltó a la corte…"
+
+msgid "Text them a kind follow-up asking them to call"
+msgstr "Enviarle un mensaje amable de seguimiento para pedirle que llame"
+
+msgid "Record missed court"
+msgstr "Registrar que faltó"
+
+msgid "Cancel court date…"
+msgstr "Cancelar cita en la corte…"
+
+msgid "Tell them by text that they don't need to go"
+msgstr "Avisarle por mensaje que no necesita ir"
+
+msgid "Cancel this court date"
+msgstr "Cancelar esta cita en la corte"
+
+msgid "Outcome"
+msgstr "Resultado"
+
+msgid "Add a new court date"
+msgstr "Agregar una nueva cita en la corte"
+
+msgid "Conversation"
+msgstr "Conversación"
+
+msgid "Write a text"
+msgstr "Escribir un mensaje"
+
+#, python-format
+msgid "Write a text to %(name)s…"
+msgstr "Escriba un mensaje a %(name)s…"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Training mode: reply as this person"
+msgstr "Modo de práctica: responder como esta persona"
+
+msgid "Question"
+msgstr "Pregunta"
+
+msgid "Reminder schedule"
+msgstr "Calendario de recordatorios"
+
+#, python-format
+msgid "%(n)s attempt"
+msgid_plural "%(n)s attempts"
+msgstr[0] "%(n)s intento"
+msgstr[1] "%(n)s intentos"
+
+msgid "Nothing scheduled."
+msgstr "Nada programado."
+
+msgid "Change court date"
+msgstr "Cambiar cita en la corte"
+
+msgid "optional"
+msgstr "opcional"
+
+msgid ""
+"If the date or time changes, reminders are rebuilt and the person gets a short 'your date changed'"
+" text."
+msgstr ""
+"Si cambia la fecha o la hora, los recordatorios se vuelven a programar y la persona recibe un "
+"breve mensaje de 'su cita cambió'."
+
+msgid "Save changes"
+msgstr "Guardar cambios"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "New court date"
+msgstr "Nueva cita en la corte"
+
+msgid ""
+"They'll get a welcome text right away (inside the send window), then reminders before the date."
+msgstr ""
+"La persona recibirá un mensaje de bienvenida de inmediato (dentro del horario de envío) y luego "
+"recordatorios antes de la fecha."
+
+#, python-format
+msgid "For %(name)s (%(phone)s)"
+msgstr "Para %(name)s (%(phone)s)"
+
+msgid "Add and start reminders"
+msgstr "Agregar e iniciar recordatorios"
+
+msgid "Court dates"
+msgstr "Citas en la corte"
+
+#, python-format
+msgid "%(n)s court date"
+msgid_plural "%(n)s court dates"
+msgstr[0] "%(n)s cita en la corte"
+msgstr[1] "%(n)s citas en la corte"
+
+msgid "Past"
+msgstr "Pasadas"
+
+msgid "Any status"
+msgstr "Cualquier estado"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Name, phone or case"
+msgstr "Nombre, teléfono o caso"
+
+msgid "No court dates match."
+msgstr "Ninguna cita en la corte coincide."
+
+msgid "Upcoming court dates"
+msgstr "Próximas citas en la corte"
+
+#, python-format
+msgid "%(n)s court date in the next %(days)s days"
+msgid_plural "%(n)s court dates in the next %(days)s days"
+msgstr[0] "%(n)s cita en la corte en los próximos %(days)s días"
+msgstr[1] "%(n)s citas en la corte en los próximos %(days)s días"
+
+msgid "Date range"
+msgstr "Rango de fechas"
+
+#, python-format
+msgid "%(r)s days"
+msgstr "%(r)s días"
+
+msgid "All courts"
+msgstr "Todas las cortes"
+
+#, python-format
+msgid "%(n)s of %(total)s people have replied to confirm"
+msgstr "%(n)s de %(total)s personas respondieron para confirmar"
+
+msgid "Replies"
+msgstr "Respuestas"
+
+#, python-format
+msgid "%(n)s text sent this week"
+msgid_plural "%(n)s texts sent this week"
+msgstr[0] "%(n)s mensaje enviado esta semana"
+msgstr[1] "%(n)s mensajes enviados esta semana"
+
+#, python-format
+msgid "%(n)s reply"
+msgid_plural "%(n)s replies"
+msgstr[0] "%(n)s respuesta"
+msgstr[1] "%(n)s respuestas"
+
+#, python-format
+msgid "%(n)s person asked for help"
+msgid_plural "%(n)s people asked for help"
+msgstr[0] "%(n)s persona pidió ayuda"
+msgstr[1] "%(n)s personas pidieron ayuda"
+
+msgid ""
+"They replied 2 or said they can't make it. A call today can keep a warrant from being issued."
+msgstr ""
+"Respondieron 2 o dijeron que no pueden ir. Una llamada hoy puede evitar que se emita una orden de "
+"arresto."
+
+msgid "Showing"
+msgstr "Mostrando"
+
+msgid "Show everyone"
+msgstr "Mostrar a todos"
+
+msgid "Today"
+msgstr "Hoy"
+
+msgid "Tomorrow"
+msgstr "Mañana"
+
+msgid "Reply"
+msgstr "Respuesta"
+
+msgid "Nobody in this group right now."
+msgstr "Por ahora no hay nadie en este grupo."
+
+msgid "No court dates coming up."
+msgstr "No hay citas próximas en la corte."
+
+msgid "Add one, or import a spreadsheet from your case management system."
+msgstr "Agregue una o importe una hoja de cálculo de su sistema de gestión de casos."
+
+msgid "Import CSV"
+msgstr "Importar CSV"
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "Import court dates"
+msgstr "Importar citas en la corte"
+
+msgid ""
+"Upload a CSV export from your case management system. Re-importing is safe: new dates are added, "
+"moved dates are rescheduled, and unchanged rows are skipped."
+msgstr ""
+"Suba un archivo CSV exportado de su sistema de gestión de casos. Puede volver a importarlo sin "
+"riesgo: se agregan las citas nuevas, se reprograman las que cambiaron de fecha y se omiten las "
+"filas sin cambios."
+
+msgid "Download template"
+msgstr "Descargar plantilla"
+
+msgid "Upload"
+msgstr "Subir"
+
+msgid "Check complete. Nothing was saved."
+msgstr "Revisión completa. No se guardó nada."
+
+msgid "Import complete"
+msgstr "Importación completa"
+
+msgid "Would add"
+msgstr "Se agregarían"
+
+msgid "Added"
+msgstr "Agregadas"
+
+msgid "Would update"
+msgstr "Se actualizarían"
+
+msgid "Updated"
+msgstr "Actualizadas"
+
+msgid "Unchanged"
+msgstr "Sin cambios"
+
+msgid "Problems"
+msgstr "Problemas"
+
+msgid "Line"
+msgstr "Línea"
+
+msgid "Problem"
+msgstr "Problema"
+
+msgid "Looks good. Untick “Check the file only” and upload again to import."
+msgstr "Todo está bien. Desmarque “Solo revisar el archivo” y vuelva a subirlo para importar."
+
+msgid "Columns"
+msgstr "Columnas"
+
+msgid "required"
+msgstr "obligatoria"
+
+msgid ""
+"Dates like 2026-11-17 or 11/17/2026. Times like 14:30 or 2:30 PM. Language as a code (es) or a "
+"name (Spanish)."
+msgstr ""
+"Fechas como 2026-11-17 o 11/17/2026. Horas como 14:30 o 2:30 PM. Idioma como código (es) o nombre "
+"(Español)."
+
+msgid "Court names must match a court in the admin:"
+msgstr "Los nombres de las cortes deben coincidir con una corte de la administración:"
+
+msgid "none yet"
+msgstr "ninguna todavía"
+
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+msgid "Replies that need a person: questions, requests for help, and texts from unknown numbers."
+msgstr ""
+"Respuestas que necesitan la atención de una persona: preguntas, solicitudes de ayuda y mensajes de"
+" números desconocidos."
+
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "All replies"
+msgstr "Todas las respuestas"
+
+msgid "Unknown number"
+msgstr "Número desconocido"
+
+#, python-format
+msgid "Handled %(when)s %(who)s"
+msgstr "Atendido el %(when)s %(who)s"
+
+msgid "All caught up."
+msgstr "Todo al día."
+
+msgid "Replies that need a person show up here."
+msgstr "Aquí aparecen las respuestas que necesitan la atención de una persona."
+
+msgid "People"
+msgstr "Personas"
+
+msgid "Add court date"
+msgstr "Agregar cita en la corte"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Save"
+msgstr "Guardar"
+
+msgid "No court dates yet."
+msgstr "Aún no hay citas en la corte."
+
+#, python-format
+msgid "%(n)s person"
+msgid_plural "%(n)s people"
+msgstr[0] "%(n)s persona"
+msgstr[1] "%(n)s personas"
+
+msgid "Name or phone"
+msgstr "Nombre o teléfono"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Next court date"
+msgstr "Próxima cita en la corte"
+
+msgid "Nobody matches."
+msgstr "No hay coincidencias."
+
+msgid "Results"
+msgstr "Resultados"
+
+msgid "Did people come to court? Based on outcomes staff recorded."
+msgstr "¿Las personas fueron a la corte? Según los resultados que registró el personal."
+
+msgid "Period"
+msgstr "Período"
+
+msgid "30 days"
+msgstr "30 días"
+
+msgid "90 days"
+msgstr "90 días"
+
+msgid "1 year"
+msgstr "1 año"
+
+#, python-format
+msgid "%(a)s of %(t)s court dates with a recorded outcome"
+msgstr "%(a)s de %(t)s citas en la corte con resultado registrado"
+
+#, python-format
+msgid "%(n)s past court date has no outcome yet"
+msgid_plural "%(n)s past court dates have no outcome yet"
+msgstr[0] "%(n)s cita pasada aún no tiene resultado"
+msgstr[1] "%(n)s citas pasadas aún no tienen resultado"
+
+msgid "Appearance rate by reply"
+msgstr "Tasa de asistencia según la respuesta"
+
+#, python-format
+msgid "%(n)s date"
+msgid_plural "%(n)s dates"
+msgstr[0] "%(n)s cita"
+msgstr[1] "%(n)s citas"
+
+msgid ""
+"People who confirm may differ from people who don't, so this shows a pattern, not proof that texts"
+" caused it."
+msgstr ""
+"Las personas que confirman pueden ser distintas de las que no confirman, así que esto muestra una "
+"tendencia, no una prueba de que los mensajes la causaron."
+
+msgid "Texts sent"
+msgstr "Mensajes enviados"
+
+#, python-format
+msgid "%(n)s failed"
+msgid_plural "%(n)s failed"
+msgstr[0] "%(n)s fallido"
+msgstr[1] "%(n)s fallidos"
+
+msgid "Opt-outs"
+msgstr "Bajas"
+
+msgid "Estimated SMS cost"
+msgstr "Costo estimado de SMS"
+
+#, python-format
+msgid "%(n)s segments"
+msgstr "%(n)s segmentos"
+
+msgid "Appearance by reply"
+msgstr "Asistencia según la respuesta"
+
+msgid "Rate"
+msgstr "Tasa"
+
+msgid "All"
+msgstr "Todas"
+
+msgid "Messages"
+msgstr "Mensajes"
+
+msgid ""
+"Every text Docketbell sends, exactly as people see it. Edit any of them in the admin under Custom "
+"message texts."
+msgstr ""
+"Todos los mensajes que envía Docketbell, tal como los ven las personas. Puede editar cualquiera en"
+" la administración, en Textos de mensajes personalizados."
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Texts per court date"
+msgstr "Mensajes por cita"
+
+msgid "welcome +"
+msgstr "bienvenida +"
+
+msgid "days before, at"
+msgstr "días antes, a las"
+
+msgid "SMS segments"
+msgstr "Segmentos de SMS"
+
+msgid "carriers bill per segment"
+msgstr "las operadoras cobran por segmento"
+
+msgid "Cost per court date"
+msgstr "Costo por cita"
+
+#, python-format
+msgid "at %(price)s per segment"
+msgstr "a %(price)s por segmento"
+
+msgid "Reminders and notices"
+msgstr "Recordatorios y avisos"
+
+msgid "Automatic replies"
+msgstr "Respuestas automáticas"
+
+msgid "Custom"
+msgstr "Personalizado"
+
+#, python-format
+msgid "%(n)s characters"
+msgstr "%(n)s caracteres"
+
+msgid ""
+"Uses characters outside the basic SMS alphabet, so each segment holds 70 characters instead of "
+"160."
+msgstr ""
+"Usa caracteres fuera del alfabeto SMS básico, así que cada segmento admite 70 caracteres en lugar "
+"de 160."
+
+msgid "Basic SMS alphabet: 160 characters per segment."
+msgstr "Alfabeto SMS básico: 160 caracteres por segmento."
+
+msgid "Add a court in the admin before adding court dates."
+msgstr "Agregue una corte en la administración antes de agregar citas en la corte."
+
+#, python-format
+msgid "Added. %(name)s will get a welcome text, then reminders before the date."
+msgstr ""
+"Cita agregada. %(name)s recibirá un mensaje de bienvenida y luego recordatorios antes de la fecha."
+
+msgid "Court date moved. Reminders were rescheduled."
+msgstr "La cita en la corte cambió de fecha. Se reprogramaron los recordatorios."
+
+msgid "Saved."
+msgstr "Guardado."
+
+msgid "Marked as confirmed."
+msgstr "Se marcó como confirmada."
+
+msgid "Confirmation removed."
+msgstr "Se quitó la confirmación."
+
+msgid "Marked as handled."
+msgstr "Se marcó como atendido."
+
+msgid "Recorded: came to court."
+msgstr "Registrado: asistió a la corte."
+
+msgid "Recorded: missed court. A follow-up text is on its way."
+msgstr "Registrado: faltó a la corte. Se está enviando un mensaje de seguimiento."
+
+msgid "Recorded: missed court."
+msgstr "Registrado: faltó a la corte."
+
+msgid "Court date canceled. Pending reminders were stopped."
+msgstr "Cita en la corte cancelada. Se detuvieron los recordatorios pendientes."
+
+msgid "Write a message first."
+msgstr "Primero escriba un mensaje."
+
+msgid "This person opted out of texts. Call them instead."
+msgstr "Esta persona se dio de baja de los mensajes. Llámela por teléfono."
+
+msgid "Text sent."
+msgstr "Mensaje enviado."
+
+#, python-format
+msgid "The text could not be sent: %(error)s"
+msgstr "No se pudo enviar el mensaje: %(error)s"
+
+#, python-format
+msgid "Simulated reply understood as: %(intent)s"
+msgstr "La respuesta simulada se interpretó como: %(intent)s"
+
+#, python-format
+msgid "Scheduled %(days)s day before."
+msgid_plural "Scheduled %(days)s days before."
+msgstr[0] "Se envía %(days)s día antes."
+msgstr[1] "Se envía %(days)s días antes."
+
+msgid "Confirmed by text"
+msgstr "Confirmó por mensaje"
+
+msgid "Never replied"
+msgstr "Nunca respondió"
+
+msgid "SMS"
+msgstr "SMS"
+
+msgid "Not found"
+msgstr "No encontrado"
+
+msgid "We couldn't find that page."
+msgstr "No pudimos encontrar esa página."
+
+msgid "Back to the dashboard"
+msgstr "Volver al panel"
+
+msgid "Skip to content"
+msgstr "Saltar al contenido"
+
+msgid "Main"
+msgstr "Principal"
+
+#, python-format
+msgid "%(n)s needs a reply"
+msgid_plural "%(n)s need a reply"
+msgstr[0] "%(n)s necesita respuesta"
+msgstr[1] "%(n)s necesitan respuesta"
+
+msgid "Account"
+msgstr "Cuenta"
+
+msgid "Admin and settings"
+msgstr "Administración y configuración"
+
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+msgid "Reminders are not going out."
+msgstr "Los recordatorios no se están enviando."
+
+#, python-format
+msgid "%(n)s reminder is overdue."
+msgid_plural "%(n)s reminders are overdue."
+msgstr[0] "%(n)s recordatorio está atrasado."
+msgstr[1] "%(n)s recordatorios están atrasados."
+
+msgid "Start the worker with"
+msgstr "Inicie el proceso de envío con"
+
+msgid "Dashboard language"
+msgstr "Idioma del panel"
+
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#, python-format
+msgid "Court date reminders for %(org_name)s"
+msgstr "Recordatorios de citas en la corte de %(org_name)s"
+
+msgid "That username and password didn't match. Try again."
+msgstr "El nombre de usuario y la contraseña no coinciden. Inténtelo de nuevo."
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Password"
+msgstr "Contraseña"

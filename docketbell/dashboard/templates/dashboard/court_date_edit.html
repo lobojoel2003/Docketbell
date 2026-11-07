@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Change court date" %}{% endblock %}
+{% block content %}
+{% translate "optional" as optional_label %}
+<nav class="crumbs"><a href="{% url 'dashboard:court-date' cd.pk %}">{{ cd.person.full_name }}</a></nav>
+<div class="page-head"><div>
+  <h1>{% translate "Change court date" %}</h1>
+  <p class="muted">{% translate "If the date or time changes, reminders are rebuilt and the person gets a short 'your date changed' text." %}</p>
+</div></div>
+<form method="post" class="form-grid card" novalidate>
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="flash flash--error span-2">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+  <fieldset class="span-2 form-section"><legend>{% translate "Court date" %}</legend>
+    {% include "dashboard/_field.html" with field=form.court %}
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.date %}{% include "dashboard/_field.html" with field=form.time %}</div>
+    <div class="form-row">{% include "dashboard/_field.html" with field=form.room %}{% include "dashboard/_field.html" with field=form.hearing_type %}</div>
+    {% include "dashboard/_field.html" with field=form.case_number %}
+    {% include "dashboard/_field.html" with field=form.notify %}
+  </fieldset>
+  <div class="span-2 form-actions"><button class="btn btn--primary" type="submit">{% translate "Save changes" %}</button> <a class="btn btn--quiet" href="{% url 'dashboard:court-date' cd.pk %}">{% translate "Cancel" %}</a></div>
+</form>
+{% endblock %}

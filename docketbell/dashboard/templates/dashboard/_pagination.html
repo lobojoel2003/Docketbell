@@ -1,0 +1,7 @@
+{% load i18n docketbell %}{% if page.has_other_pages %}
+<nav class="pagination" aria-label="{% translate 'Pages' %}">
+  {% if page.has_previous %}<a class="btn btn--sm" href="{% query page=page.previous_page_number %}">{% translate "Previous" %}</a>{% endif %}
+  <span class="muted">{% blocktranslate with n=page.number total=page.paginator.num_pages %}Page {{ n }} of {{ total }}{% endblocktranslate %}</span>
+  {% if page.has_next %}<a class="btn btn--sm" href="{% query page=page.next_page_number %}">{% translate "Next" %}</a>{% endif %}
+</nav>
+{% endif %}

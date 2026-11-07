@@ -1,0 +1,111 @@
+{% extends "base.html" %}{% load i18n docketbell %}
+{% block title %}{% translate "Upcoming court dates" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{% translate "Upcoming court dates" %}</h1>
+    <p class="muted">{% blocktranslate count n=total %}{{ n }} court date in the next {{ days }} days{% plural %}{{ n }} court dates in the next {{ days }} days{% endblocktranslate %}</p>
+  </div>
+  <form class="filters" method="get">
+    <div class="segmented" role="group" aria-label="{% translate 'Date range' %}">
+      {% for r in ranges %}<a href="{% query days=r %}" {% if r == days %}aria-current="true"{% endif %}>{% blocktranslate %}{{ r }} days{% endblocktranslate %}</a>{% endfor %}
+    </div>
+    {% if courts|length > 1 %}
+    <label class="visually-hidden" for="court-filter">{% translate "Court" %}</label>
+    <select id="court-filter" name="court" data-autosubmit>
+      <option value="">{% translate "All courts" %}</option>
+      {% for court in courts %}<option value="{{ court.pk }}" {% if court_id == court.pk|stringformat:"s" %}selected{% endif %}>{{ court.name }}</option>{% endfor %}
+    </select>
+    <input type="hidden" name="days" value="{{ days }}">
+    {% endif %}
+  </form>
+</div>
+
+<section class="card summary" aria-labelledby="summary-title">
+  <div class="summary__hero">
+    <h2 id="summary-title" class="eyebrow">{% translate "Confirmed" %}</h2>
+    <p class="hero-figure">{% if total %}{{ confirmed.share }}%{% else %}–{% endif %}</p>
+    <p class="muted">{% blocktranslate with n=confirmed.count %}{{ n }} of {{ total }} people have replied to confirm{% endblocktranslate %}</p>
+  </div>
+  <div class="summary__detail">
+    {% if total %}
+    <div class="segbar" role="img" aria-label="{% for b in breakdown %}{{ b.label }}: {{ b.count }} ({{ b.share }}%){% if not forloop.last %}, {% endif %}{% endfor %}">
+      {% for b in breakdown %}{% if b.count %}
+      <a class="segbar__part segbar__part--{{ b.key }}" style="flex-grow: {{ b.width|stringformat:'.4f' }}" href="{% query response=b.key %}"
+         data-tip="{{ b.label }} · {{ b.count }} · {{ b.share }}%" aria-label="{{ b.label }}: {{ b.count }}">
+        {% if b.width >= 9 %}<span>{{ b.share }}%</span>{% endif %}
+      </a>
+      {% endif %}{% endfor %}
+    </div>
+    {% endif %}
+    <ul class="tiles" aria-label="{% translate 'Replies' %}">
+      {% for b in breakdown %}
+      <li>
+        <a class="tile {% if filter_response == b.key %}is-active{% endif %}" href="{% if filter_response == b.key %}{% query response='' %}{% else %}{% query response=b.key %}{% endif %}">
+          <span class="tile__label"><span class="swatch swatch--{{ b.key }}">{% icon b.key|response_icon %}</span>{{ b.label }}</span>
+          <span class="tile__value">{{ b.count }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="summary__foot muted">
+      {% icon "send" %} {% blocktranslate count n=texts_this_week %}{{ n }} text sent this week{% plural %}{{ n }} texts sent this week{% endblocktranslate %}
+      · {% blocktranslate count n=replies_this_week %}{{ n }} reply{% plural %}{{ n }} replies{% endblocktranslate %}
+    </p>
+  </div>
+</section>
+
+{% if needs_help and not filter_response %}
+<section class="card callout callout--warning" aria-labelledby="help-title">
+  <h2 id="help-title">{% icon "alert" %} {% blocktranslate count n=needs_help|length %}{{ n }} person asked for help{% plural %}{{ n }} people asked for help{% endblocktranslate %}</h2>
+  <p class="muted">{% translate "They replied 2 or said they can't make it. A call today can keep a warrant from being issued." %}</p>
+  <ul class="callout__list">
+    {% for cd in needs_help %}
+    <li><a href="{% url 'dashboard:court-date' cd.pk %}"><strong>{{ cd.person.full_name }}</strong></a>
+      <span class="muted">{{ cd|court_time:"D, M j" }} · {{ cd|court_time }} · {{ cd.person.phone|phone }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{% if filter_response %}
+<p class="filter-note">{% translate "Showing" %} <strong>{% for b in breakdown %}{% if b.key == filter_response %}{{ b.label|lower }}{% endif %}{% endfor %}</strong> · <a href="{% query response='' %}">{% translate "Show everyone" %}</a></p>
+{% endif %}
+
+{% for day, offset, items in groups %}
+<section class="card day" aria-labelledby="day-{{ forloop.counter }}">
+  <header class="day__head">
+    <h2 id="day-{{ forloop.counter }}">
+      {% if offset == 0 %}{% translate "Today" %}{% elif offset == 1 %}{% translate "Tomorrow" %}{% else %}{{ day|date:"l" }}{% endif %}
+      <span class="muted">{{ day|date:"F j" }}</span>
+    </h2>
+    <span class="muted">{% blocktranslate count n=items|length %}{{ n }} court date{% plural %}{{ n }} court dates{% endblocktranslate %}</span>
+  </header>
+  <table class="table table--rows">
+    <thead class="visually-hidden"><tr><th>{% translate "Time" %}</th><th>{% translate "Person" %}</th><th>{% translate "Court" %}</th><th>{% translate "Reminders" %}</th><th>{% translate "Reply" %}</th></tr></thead>
+    <tbody>
+      {% for cd in items %}
+      <tr>
+        <td class="t-time">{{ cd|court_time }}</td>
+        <td class="t-person">
+          <a class="row-link" href="{% url 'dashboard:court-date' cd.pk %}">{{ cd.person.full_name }}</a>
+          <span class="lang" title="{{ cd.person.get_language_display }}">{{ cd.person.language|upper|slice:":2" }}</span>
+          {% if cd.hearing_type %}<span class="muted t-sub">{{ cd.hearing_type }}</span>{% endif %}
+        </td>
+        <td class="t-court"><span>{{ cd.court.name }}</span>{% if cd.room %}<span class="muted t-sub">{{ cd.room }}</span>{% endif %}</td>
+        <td class="t-reminders">{% include "dashboard/_reminder_dots.html" with reminders=cd.visible_reminders %}</td>
+        <td class="t-status">{% include "dashboard/_response.html" with response=cd.response %}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% empty %}
+<div class="empty card">
+  {% icon "calendar" "icon--xl" %}
+  <h2>{% if filter_response %}{% translate "Nobody in this group right now." %}{% else %}{% translate "No court dates coming up." %}{% endif %}</h2>
+  <p class="muted">{% translate "Add one, or import a spreadsheet from your case management system." %}</p>
+  <p><a class="btn btn--primary" href="{% url 'dashboard:court-date-new' %}">{% translate "New court date" %}</a> <a class="btn" href="{% url 'dashboard:import' %}">{% translate "Import CSV" %}</a></p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,81 @@
+{% load static i18n docketbell %}<!doctype html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE }}" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}{% translate "Dashboard" %}{% endblock %} · Docketbell</title>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="{% static 'js/app.js' %}" defer></script>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <a class="skip-link" href="#main">{% translate "Skip to content" %}</a>
+  {% if user.is_authenticated %}
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="{% url 'dashboard:home' %}">
+        <img src="{% static 'img/logo.svg' %}" alt="" width="28" height="28">
+        <span class="brand__name">Docketbell</span>
+        <span class="brand__org">{{ org_name }}</span>
+      </a>
+      {% url 'dashboard:home' as home_url %}{% url 'dashboard:court-dates' as dates_url %}{% url 'dashboard:people' as people_url %}{% url 'dashboard:inbox' as inbox_url %}{% url 'dashboard:studio' as studio_url %}{% url 'dashboard:results' as results_url %}{% url 'dashboard:import' as import_url %}
+      <nav class="nav" aria-label="{% translate 'Main' %}">
+        <a href="{{ home_url }}" {% if request.path == home_url %}aria-current="page"{% endif %}>{% translate "Upcoming" %}</a>
+        <a href="{{ dates_url }}" {% if dates_url in request.path %}aria-current="page"{% endif %}>{% translate "Court dates" %}</a>
+        <a href="{{ people_url }}" {% if people_url in request.path %}aria-current="page"{% endif %}>{% translate "People" %}</a>
+        <a href="{{ inbox_url }}" {% if inbox_url in request.path %}aria-current="page"{% endif %}>{% translate "Inbox" %}{% if inbox_count %} <span class="badge" aria-label="{% blocktranslate count n=inbox_count %}{{ n }} needs a reply{% plural %}{{ n }} need a reply{% endblocktranslate %}">{{ inbox_count }}</span>{% endif %}</a>
+        <a href="{{ studio_url }}" {% if studio_url in request.path %}aria-current="page"{% endif %}>{% translate "Messages" %}</a>
+        <a href="{{ results_url }}" {% if results_url in request.path %}aria-current="page"{% endif %}>{% translate "Results" %}</a>
+        <a href="{{ import_url }}" {% if import_url in request.path %}aria-current="page"{% endif %}>{% translate "Import" %}</a>
+      </nav>
+      <div class="topbar__actions">
+        <a class="btn btn--primary btn--sm" href="{% url 'dashboard:court-date-new' %}">{% icon "plus" %}<span>{% translate "New court date" %}</span></a>
+        <details class="menu">
+          <summary aria-label="{% translate 'Account' %}"><span class="avatar">{{ user.get_username|slice:":1"|upper }}</span></summary>
+          <div class="menu__panel">
+            <p class="menu__who">{{ user.get_full_name|default:user.get_username }}</p>
+            {% if user.is_staff %}<a href="{% url 'admin:index' %}">{% translate "Admin and settings" %}</a>{% endif %}
+            <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">{% translate "Log out" %}</button></form>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  {% if worker and not worker.healthy and worker.overdue %}
+  <div class="banner banner--critical" role="alert">
+    <div class="container">{% icon "alert" %}
+      <strong>{% translate "Reminders are not going out." %}</strong>
+      {% blocktranslate count n=worker.overdue %}{{ n }} reminder is overdue.{% plural %}{{ n }} reminders are overdue.{% endblocktranslate %}
+      {% translate "Start the worker with" %} <code>manage.py run_worker</code>.
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+
+  <main id="main" class="container {% block main_class %}{% endblock %}">
+    {% if messages %}
+    <div class="flash-list" role="status">
+      {% for message in messages %}<div class="flash flash--{{ message.tags }}">{{ message }}</div>{% endfor %}
+    </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span title="{{ build.commit }}">{{ build.label }}</span>
+      <form action="{% url 'set_language' %}" method="post" class="lang-form">
+        {% csrf_token %}<input name="next" type="hidden" value="{{ request.get_full_path }}">
+        <label for="ui-language" class="visually-hidden">{% translate "Dashboard language" %}</label>
+        {% icon "globe" %}
+        <select id="ui-language" name="language" data-autosubmit>
+          {% get_available_languages as LANGUAGES %}
+          {% for code, name in LANGUAGES %}<option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected{% endif %}>{{ name }}</option>{% endfor %}
+        </select>
+      </form>
+    </div>
+  </footer>
+</body>
+</html>

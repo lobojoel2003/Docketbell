@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load i18n static %}
+{% block title %}{% translate "Log in" %}{% endblock %}
+{% block body_class %}page-login{% endblock %}
+{% block content %}
+<div class="login">
+  <div class="login__card">
+    <img src="{% static 'img/logo.svg' %}" alt="" width="48" height="48">
+    <h1>Docketbell</h1>
+    <p class="muted">{% blocktranslate %}Court date reminders for {{ org_name }}{% endblocktranslate %}</p>
+    <form method="post" class="stack">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="flash flash--error">{% translate "That username and password didn't match. Try again." %}</div>{% endif %}
+      <label class="field"><span>{% translate "Username" %}</span>{{ form.username }}</label>
+      <label class="field"><span>{% translate "Password" %}</span>{{ form.password }}</label>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button class="btn btn--primary btn--block" type="submit">{% translate "Log in" %}</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
