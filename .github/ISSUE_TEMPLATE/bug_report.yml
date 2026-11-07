@@ -1,0 +1,29 @@
+name: Bug report
+description: Something isn't working as it should.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown in the dashboard footer, e.g. "Docketbell 1.0.0 (build 12, 1a2b3c4)".
+    validations:
+      required: true
+  - type: dropdown
+    id: sms
+    attributes:
+      label: SMS backend
+      options: [Twilio, HTTP gateway, Console, Other]
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Remove phone numbers, names and anything else personal before pasting.
+      render: shell

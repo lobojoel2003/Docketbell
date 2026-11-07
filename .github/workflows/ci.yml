@@ -1,0 +1,188 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+concurrency:
+  group: ci-${{ github.workflow_ref }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.13"
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install "ruff>=0.8"
+      - name: Ruff lint
+        run: ruff check --output-format=github .
+      - name: Ruff format
+        run: ruff format --check .
+
+  test:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.13"]
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: docketbell
+          POSTGRES_PASSWORD: docketbell
+          POSTGRES_DB: docketbell
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U docketbell"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DATABASE_URL: postgres://docketbell:docketbell@localhost:5432/docketbell
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Django system checks
+        env:
+          SECRET_KEY: ci-only-secret-key-for-checks-0123456789abcdefghijklmnopqrstuvwxyz
+          DOCKETBELL_ORG_PHONE: (212) 555-0199
+          SMS_BACKEND: locmem
+        run: |
+          python manage.py check --fail-level WARNING
+          python manage.py check --deploy --fail-level ERROR
+      - name: Migrations are up to date
+        env:
+          DEBUG: "true"
+        run: python manage.py makemigrations --check --dry-run
+      - name: Tests
+        run: python -m pytest --cov --cov-report=xml --cov-report=term --cov-fail-under=90
+      - name: Upload coverage report
+        if: matrix.python == env.PYTHON_VERSION
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: coverage.xml
+          retention-days: 14
+
+  translations:
+    name: Translations are up to date
+    # Pinned so gettext formats catalogs exactly as committed.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: sudo apt-get update && sudo apt-get install -y gettext
+      - run: pip install -e .
+      - name: Extract strings
+        working-directory: docketbell
+        env:
+          DEBUG: "true"
+        run: >-
+          python ../manage.py makemessages -l es -l zh_Hans -l vi -l ko -l ru -l ar -l ht
+          --no-location --no-obsolete
+      - name: Fail if new strings were not extracted
+        run: |
+          if ! git diff --exit-code -I '^"POT-Creation-Date' -- 'docketbell/locale/*.po'; then
+            echo "::error::Translatable strings changed. Run 'make messages', translate, and commit."
+            exit 1
+          fi
+
+  package:
+    name: Build package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install build
+      - run: python -m build
+      - name: Check the wheel ships templates, static files and translations
+        run: |
+          unzip -l dist/*.whl > contents.txt
+          for path in templates/base.html static/css/app.css locale/es/LC_MESSAGES/django.mo \
+                      dashboard/templates/dashboard/home.html core/migrations/0001_initial.py; do
+            grep -q "docketbell/$path" contents.txt || { echo "::error::missing $path"; exit 1; }
+          done
+      - uses: actions/upload-artifact@v7
+        with:
+          name: python-package
+          path: dist/
+          retention-days: 14
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    permissions:
+      contents: read
+      packages: write
+    env:
+      PUBLISH: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Image name and version
+        id: meta-vars
+        run: |
+          echo "image=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/docketbell" >> "$GITHUB_OUTPUT"
+          version=$(python3 -c "import re; print(re.search(r'__version__ = \"(.+?)\"', open('docketbell/__init__.py').read()).group(1))")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "date=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/metadata-action@v6
+        id: meta
+        with:
+          images: ${{ steps.meta-vars.outputs.image }}
+          tags: |
+            type=edge,branch=main
+            type=sha,prefix=sha-
+          labels: |
+            org.opencontainers.image.version=${{ steps.meta-vars.outputs.version }}-edge.${{ github.run_number }}
+      - name: Log in to GitHub Container Registry
+        if: env.PUBLISH == 'true'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build${{ env.PUBLISH == 'true' && ' and push' || '' }}
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          load: ${{ env.PUBLISH != 'true' }}
+          push: ${{ env.PUBLISH == 'true' }}
+          tags: ${{ env.PUBLISH == 'true' && steps.meta.outputs.tags || 'docketbell:ci' }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ steps.meta-vars.outputs.version }}
+            BUILD_NUMBER=${{ github.run_number }}
+            GIT_SHA=${{ github.sha }}
+            BUILD_DATE=${{ steps.meta-vars.outputs.date }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Smoke test the image
+        if: env.PUBLISH != 'true'
+        run: |
+          docker run --rm docketbell:ci docketbell --version
+          docker run --rm -e SECRET_KEY=smoke-test docketbell:ci docketbell check
